@@ -35,30 +35,30 @@
             </div>
 
             <div class="type-of-timer">
-                <div class="pomotime">
+                <div class="pomotime clicked-mode" onclick="to_pomo()">
                     <p class="p-pomo">POMODORO</p>
                 </div>
 
-                <div class="shortbreak">
+                <div class="shortbreak" onclick="to_shortb()">
                     <p class="p-shortbreak">SHORT BREAK</p>
                 </div>
 
-                <div class="longbreak">
+                <div class="longbreak" onclick="to_longb()">
                     <p class="p-longbreak">LONG BREAK</p>
                 </div>
             </div>
 
             <div class="bottom-timer">
             <div class="controls">
-                <button class="skip-butt">
+                <button class="skip-butt" onclick="skipbutt()">
                     <i class="fa-solid fa-forward"></i>
                 </button>
 
-                <button class="start-butt">
+                <button class="start-butt" onclick="startbutt()">
                     <i class="fa-solid fa-play"></i>
                 </button>
 
-                <button class="stop-butt">
+                <button class="stop-butt" onclick="stopbutt()">
                     <i class="fa-solid fa-stop"></i>
                 </button>
             </div>
@@ -70,5 +70,6 @@
         </div>
     </div>
 
+    <script src="js/timer.js"></script>
 </body>
 </html>
