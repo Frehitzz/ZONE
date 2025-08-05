@@ -1,6 +1,5 @@
 let sessioncount = 0;
 
-
 function resetAllstyle(){
     const Allmodes = document.querySelectorAll('.pomotime, .shortbreak, .longbreak');
     
@@ -40,6 +39,9 @@ function changeMinutesWithAnimation(newMinutes, newSeconds) {
 
 //TYPES OF TIMER
 function to_pomo(){
+    // Stop any playing sound when switching modes
+    stopsound();
+    
     // Stop running timer when switch modes
     if (isRunning) {
         clearInterval(timerInterval);
@@ -61,6 +63,9 @@ function to_pomo(){
 }
 
 function to_shortb(){
+    // Stop any playing sound when switching modes
+    stopsound();
+    
     // Stop running timer when switch modes
     if (isRunning) {
         clearInterval(timerInterval);
@@ -80,6 +85,9 @@ function to_shortb(){
 }
 
 function to_longb(){
+    // Stop any playing sound when switching modes
+    stopsound();
+    
     // Stop running timer when switch modes
     if (isRunning) {
         clearInterval(timerInterval);
@@ -105,6 +113,7 @@ function startbutt(){
     //for pausing the counter
     if (isRunning) {
         // If timer is running, pause it
+        stopsound(); // Stop any playing sound when pausing
         clearInterval(timerInterval);
         isRunning = false;
 
@@ -156,8 +165,10 @@ function startbutt(){
             playIcon.style.transition = 'all 0.3s ease-in-out';
             playIcon.className = 'fa-solid fa-play';
              
+            playsound();
             // Timer finished - you can add notification here
             alert("Time's up!");
+            stopsound(); // Stop sound when user clicks OK on alert
             
             // Auto-progress: Pomodoro → Short Break or Long Break
             const activeMode = document.querySelector('.clicked-mode');
@@ -183,6 +194,12 @@ function startbutt(){
                         }, 500);
                     }, 1000);
                 }
+            } else if (activeMode.classList.contains('shortbreak')) {
+                // After short break, go back to Pomodoro
+                alert("Short break completed! Ready for next Pomodoro session.");
+                setTimeout(() => {
+                    to_pomo(); // Switch back to Pomodoro (ready to start)
+                }, 1000);
             } else if (activeMode.classList.contains('longbreak')) {
                 // After long break, reset session count and go back to Pomodoro
                 sessioncount = 0; // Reset the cycle
@@ -197,6 +214,9 @@ function startbutt(){
 
 // Stop button functionality
 function stopbutt(){
+    // Stop any playing sound
+    stopsound();
+    
     clearInterval(timerInterval);
     isRunning = false;
     
@@ -218,6 +238,9 @@ function stopbutt(){
 
 // Skip button functionality
 function skipbutt(){
+    // Stop any playing sound first
+    stopsound();
+    
     if (isRunning) {
         // Stop current timer
         clearInterval(timerInterval);
@@ -273,3 +296,41 @@ function skipbutt(){
     }
 }
 
+function playsound(){
+    const sound = document.getElementById("audio");
+    
+    // Reset audio to beginning
+    sound.currentTime = 0;
+    
+    // Remove muted attribute and set volume
+    sound.muted = false;
+    sound.volume = 0.5; // Set volume to 50%
+    
+    // Play the sound with error handling
+    sound.play().then(() => {
+        console.log("Sound played successfully");
+    }).catch((error) => {
+        console.log("Error playing sound:", error);
+        // Fallback: try to play after user interaction
+        document.addEventListener('click', function playOnClick() {
+            sound.play();
+            document.removeEventListener('click', playOnClick);
+        });
+    });
+}
+
+function stopsound(){
+    const sound = document.getElementById("audio");
+    
+    // Make sure sound exists
+    if (sound) {
+        // Pause the sound and reset to beginning
+        sound.pause();
+        sound.currentTime = 0;
+        sound.muted = true; // Also mute it to be extra sure
+        
+        console.log("Sound stopped and muted");
+    } else {
+        console.log("Audio element not found");
+    }
+}
