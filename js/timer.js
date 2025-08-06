@@ -1,4 +1,5 @@
 let sessioncount = 0;
+let soundPlaying = false; // Add flag to track sound state
 
 function resetAllstyle(){
     const Allmodes = document.querySelectorAll('.pomotime, .shortbreak, .longbreak');
@@ -7,7 +8,6 @@ function resetAllstyle(){
     Allmodes.forEach(mode => {
         mode.classList.remove('clicked-mode');
     });
-    
 }
 
 function changeMinutesWithAnimation(newMinutes, newSeconds) {
@@ -39,9 +39,6 @@ function changeMinutesWithAnimation(newMinutes, newSeconds) {
 
 //TYPES OF TIMER
 function to_pomo(){
-    // Stop any playing sound when switching modes
-    stopsound();
-    
     // Stop running timer when switch modes
     if (isRunning) {
         clearInterval(timerInterval);
@@ -54,18 +51,15 @@ function to_pomo(){
     }
     
     resetAllstyle();
-    //FOR ANIMATION
-    changeMinutesWithAnimation("25","00");
+    //FOR ANIMATION - Set to 25 minutes for Pomodoro
+    changeMinutesWithAnimation("25", "00");
 
-    //ADDING BACKGROUND COLOR WEHEN CLICKED
+    //ADDING BACKGROUND COLOR WHEN CLICKED
     const pomotime = document.querySelector('.pomotime');
     pomotime.classList.add('clicked-mode');
 }
 
 function to_shortb(){
-    // Stop any playing sound when switching modes
-    stopsound();
-    
     // Stop running timer when switch modes
     if (isRunning) {
         clearInterval(timerInterval);
@@ -78,16 +72,13 @@ function to_shortb(){
     }
     
     resetAllstyle();
-    changeMinutesWithAnimation("05", "00");
+    changeMinutesWithAnimation("51", "00");
 
     const shortb = document.querySelector('.shortbreak');
     shortb.classList.add('clicked-mode');
 }
 
 function to_longb(){
-    // Stop any playing sound when switching modes
-    stopsound();
-    
     // Stop running timer when switch modes
     if (isRunning) {
         clearInterval(timerInterval);
@@ -106,36 +97,35 @@ function to_longb(){
     longb.classList.add('clicked-mode');
 }
 
-let timerInterval = null; //counter
-let isRunning = false; // check if the timer is running 
+let timerInterval = null; // COUNTDOWN
+let isRunning = false; // SET IT TO FALSE BECAUSE THE DEFAULT COUNTDOWN IS NOT RUNNING
 
 function startbutt(){
-    //for pausing the counter
-    if (isRunning) {
-        // If timer is running, pause it
-        stopsound(); // Stop any playing sound when pausing
-        clearInterval(timerInterval);
-        isRunning = false;
+    // WHEN YOU CLICK AGAIN IT WILL PAUSE THE COUNTDOWN
+    if (isRunning) { // CHECK IF THE TIMER IS RUNNING 
+        stopsound(); // STOP SOUNDS WHEN PAUSING 
+        clearInterval(timerInterval); // STOP THE COUNTDOWN
+        isRunning = false; // SET TO FALSE BECAUSE ITS NOT RUNNING RN
 
-        // Change button icon back to play with smooth transition
+        // CHANGE THE BUTTON TO START BUTTON
         const playIcon = document.querySelector('.start-butt i');
         playIcon.style.transition = 'all 0.3s ease-in-out';
         playIcon.className = 'fa-solid fa-play';
-        return;
-
+        return; // STOP THE FUNCTION
     }
     
-    //current time from display
+    //GETTING THE TIMER DISPLAY ON HTML AND MAKE IT A NUMBER
     const minutes = parseInt(document.getElementById("minutes").textContent);
     const seconds = parseInt(document.getElementById("seconds").textContent);
     
-    // getting the seconds
+    // GETTING THE SECONDS
+    // 60 = IS THE NUMBER OF SECONDS IN 1MINUTE
     let totalSeconds = (minutes * 60) + seconds;
     
-    // Start the countdown
+    // SET TO TRUE, TO START THE COUNTDOWN
     isRunning = true;
     
-    // Change button icon to pause with smooth transition
+    // AFTER THE COUNTDOWN IS RUNNING CHANGE THE START BUTTON TO PAUSE
     const playIcon = document.querySelector('.start-butt i');
     playIcon.style.transition = 'all 0.3s ease-in-out';
     playIcon.className = 'fa-solid fa-pause';
@@ -144,11 +134,15 @@ function startbutt(){
     timerInterval = setInterval(() => {
         totalSeconds--;
         
-        // Convert back to minutes and seconds
+        // CONVERT THE SECONDS TO MINUTES
         const displayMinutes = Math.floor(totalSeconds / 60);
+
+        // GET THE REMAINING AND SET IT TO SECONDS
         const displaySeconds = totalSeconds % 60;
         
-        // make the minutes and sexonds have 2 digit each 
+        // MAKE THE TIMER HAVE A 2 DIGITS
+        // CORRECT: 05:00
+        //WRONG: 5:35 
         const formattedMinutes = displayMinutes.toString().padStart(2, '0');
         const formattedSeconds = displaySeconds.toString().padStart(2, '0');
         
@@ -156,58 +150,67 @@ function startbutt(){
         document.getElementById("minutes").textContent = formattedMinutes;
         document.getElementById("seconds").textContent = formattedSeconds;
         
-        // Check if timer finished
+        // CHECK IF TIMER IS FINISHES
         if (totalSeconds <= 0) {
+            // STOP THE COUNTDOWN
             clearInterval(timerInterval);
             isRunning = false;
             
-            // Change button back to play with smooth transition
+            // CHANGE BUTTON BACK TO PLAY WITH TRANSITION
             playIcon.style.transition = 'all 0.3s ease-in-out';
             playIcon.className = 'fa-solid fa-play';
              
+            // Timer finished - play sound first
             playsound();
-            // Timer finished - you can add notification here
-            alert("Time's up!");
-            stopsound(); // Stop sound when user clicks OK on alert
             
-            // Auto-progress: Pomodoro → Short Break or Long Break
-            const activeMode = document.querySelector('.clicked-mode');
-            if (activeMode.classList.contains('pomotime')) {
-                sessioncount++;
-                console.log("Completed Pomodoro sessions:", sessioncount);
+            // Show alert after a brief delay to allow sound to start
+            setTimeout(() => {
+                alert("Time's up!");
+                // Stop sound when user dismisses alert
+                stopsound();
                 
-                // After 4 Pomodoro sessions, go to long break
-                if (sessioncount % 4 === 0) {
-                    alert("Great job! You've completed 4 Pomodoro sessions. Time for a long break!");
-                    setTimeout(() => {
-                        to_longb(); // Switch to long break
+                // AUTO PROGRESS: IF POMODORO FINISHED GO AUTOMATIC TO SHORT 
+                // GET WHO IS THE ACTIVE OF WHO IS HAVE THE .CLICKED-MODE
+                const activeMode = document.querySelector('.clicked-mode');
+
+                // IF THE SELECTED MODE IS POMOTIME
+                if (activeMode.classList.contains('pomotime')) {
+                    sessioncount++; // ADD THE SESSION 
+                    console.log("Completed Pomodoro sessions:", sessioncount);
+                    
+                    // After 4 Pomodoro sessions, go to long break
+                    if (sessioncount % 4 === 0) {
+                        alert("Great job! You've completed 4 Pomodoro sessions. Time for a long break!");
                         setTimeout(() => {
-                            startbutt(); // Auto-start the long break timer
-                        }, 500);
+                            to_longb(); // Switch to long break
+                            setTimeout(() => {
+                                startbutt(); // Auto-start the long break timer
+                            }, 500);
+                        }, 1000);
+                    } else {
+                        // Less than 4 sessions, go to short break
+                        setTimeout(() => {
+                            to_shortb(); // Switch to short break
+                            setTimeout(() => {
+                                startbutt(); // Auto-start the short break timer
+                            }, 500);
+                        }, 1000);
+                    }
+                } else if (activeMode.classList.contains('shortbreak')) {
+                    // After short break, go back to Pomodoro
+                    alert("Short break completed! Ready for next Pomodoro session.");
+                    setTimeout(() => {
+                        to_pomo(); // Switch back to Pomodoro (ready to start)
                     }, 1000);
-                } else {
-                    // Less than 4 sessions, go to short break
+                } else if (activeMode.classList.contains('longbreak')) {
+                    // After long break, reset session count and go back to Pomodoro
+                    sessioncount = 0; // Reset the cycle
+                    alert("Long break completed! Starting fresh Pomodoro cycle.");
                     setTimeout(() => {
-                        to_shortb(); // Switch to short break
-                        setTimeout(() => {
-                            startbutt(); // Auto-start the short break timer
-                        }, 500);
+                        to_pomo(); // Switch back to Pomodoro (ready to start)
                     }, 1000);
                 }
-            } else if (activeMode.classList.contains('shortbreak')) {
-                // After short break, go back to Pomodoro
-                alert("Short break completed! Ready for next Pomodoro session.");
-                setTimeout(() => {
-                    to_pomo(); // Switch back to Pomodoro (ready to start)
-                }, 1000);
-            } else if (activeMode.classList.contains('longbreak')) {
-                // After long break, reset session count and go back to Pomodoro
-                sessioncount = 0; // Reset the cycle
-                alert("Long break completed! Starting fresh Pomodoro cycle.");
-                setTimeout(() => {
-                    to_pomo(); // Switch back to Pomodoro (ready to start)
-                }, 1000);
-            }
+            }, 500); // Small delay to let sound start playing
         }
     }, 1000); // Run every 1 second
 }
@@ -299,35 +302,67 @@ function skipbutt(){
 function playsound(){
     const sound = document.getElementById("audio");
     
+    if (!sound) {
+        console.log("Audio element not found!");
+        return;
+    }
+    
+    console.log("Attempting to play sound...");
+    soundPlaying = true;
+    
     // Reset audio to beginning
     sound.currentTime = 0;
     
     // Remove muted attribute and set volume
     sound.muted = false;
-    sound.volume = 0.5; // Set volume to 50%
+    sound.volume = 0.8;
+    sound.loop = true; // Loop the sound until manually stopped
     
-    // Play the sound with error handling
-    sound.play().then(() => {
-        console.log("Sound played successfully");
-    }).catch((error) => {
-        console.log("Error playing sound:", error);
-        // Fallback: try to play after user interaction
-        document.addEventListener('click', function playOnClick() {
-            sound.play();
-            document.removeEventListener('click', playOnClick);
+    // Try to play immediately first
+    const playPromise = sound.play();
+    
+    if (playPromise !== undefined) {
+        playPromise.then(() => {
+            console.log("Sound played successfully!");
+        }).catch((error) => {
+            console.log("Autoplay prevented. Error:", error);
+            
+            // Create a more aggressive fallback
+            const playFallback = () => {
+                if (soundPlaying) { // Only play if we still want the sound
+                    console.log("Trying fallback sound play...");
+                    sound.play().then(() => {
+                        console.log("Fallback sound played!");
+                    }).catch(() => {
+                        console.log("Fallback also failed");
+                        // Try one more time with a different approach
+                        setTimeout(() => {
+                            if (soundPlaying) {
+                                sound.play().catch(() => console.log("Final attempt failed"));
+                            }
+                        }, 100);
+                    });
+                }
+            };
+            
+            // Add event listeners for user interaction
+            document.addEventListener('click', playFallback, { once: true });
+            document.addEventListener('keydown', playFallback, { once: true });
+            document.addEventListener('touchstart', playFallback, { once: true });
         });
-    });
+    }
 }
 
 function stopsound(){
     const sound = document.getElementById("audio");
+    soundPlaying = false;
     
-    // Make sure sound exists
     if (sound) {
-        // Pause the sound and reset to beginning
+        // Pause the sound and reset
         sound.pause();
         sound.currentTime = 0;
-        sound.muted = true; // Also mute it to be extra sure
+        sound.loop = false;
+        sound.muted = true;
         
         console.log("Sound stopped and muted");
     } else {
