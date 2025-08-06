@@ -1,5 +1,8 @@
 let sessioncount = 0;
 let soundPlaying = false; // Add flag to track sound state
+let totalTimerSeconds = 0;
+
+
 
 function resetAllstyle(){
     const Allmodes = document.querySelectorAll('.pomotime, .shortbreak, .longbreak');
@@ -8,6 +11,12 @@ function resetAllstyle(){
     Allmodes.forEach(mode => {
         mode.classList.remove('clicked-mode');
     });
+}
+
+function progressbar(currentseconds,totalSeconds){
+    const progress = (totalSeconds - currentseconds) / totalSeconds * 360;
+    const maintTimer = document.querySelector('.main-timer');
+    maintTimer.style.setProperty('--progress',`${progress}deg`);
 }
 
 function changeMinutesWithAnimation(newMinutes, newSeconds) {
@@ -54,6 +63,9 @@ function to_pomo(){
     //FOR ANIMATION - Set to 25 minutes for Pomodoro
     changeMinutesWithAnimation("25", "00");
 
+    //RESET THE PROGRESBAR WHEN CLICKED THIS MODE
+    progressbar(1500,1500);
+
     //ADDING BACKGROUND COLOR WHEN CLICKED
     const pomotime = document.querySelector('.pomotime');
     pomotime.classList.add('clicked-mode');
@@ -72,7 +84,10 @@ function to_shortb(){
     }
     
     resetAllstyle();
-    changeMinutesWithAnimation("51", "00");
+    changeMinutesWithAnimation("05", "00");
+
+    //RESET THE PROGRESBAR WHEN CLICKED THIS MODE
+    progressbar(300,300);
 
     const shortb = document.querySelector('.shortbreak');
     shortb.classList.add('clicked-mode');
@@ -92,6 +107,9 @@ function to_longb(){
     
     resetAllstyle();
     changeMinutesWithAnimation("15", "00");
+
+     //RESET THE PROGRESBAR WHEN CLICKED THIS MODE
+    progressbar(900,900);
 
     const longb = document.querySelector('.longbreak');
     longb.classList.add('clicked-mode');
@@ -121,6 +139,8 @@ function startbutt(){
     // GETTING THE SECONDS
     // 60 = IS THE NUMBER OF SECONDS IN 1MINUTE
     let totalSeconds = (minutes * 60) + seconds;
+    //totalTimerSeconds = you can see on the top, it tracks total timer duration for prog bar
+    totalTimerSeconds = totalSeconds;
     
     // SET TO TRUE, TO START THE COUNTDOWN
     isRunning = true;
@@ -134,6 +154,9 @@ function startbutt(){
     timerInterval = setInterval(() => {
         totalSeconds--;
         
+        //UPDATE PROGRESS BAR
+        progressbar(totalSeconds, totalTimerSeconds);
+
         // CONVERT THE SECONDS TO MINUTES
         const displayMinutes = Math.floor(totalSeconds / 60);
 
@@ -232,10 +255,16 @@ function stopbutt(){
     const activeMode = document.querySelector('.clicked-mode');
     if (activeMode.classList.contains('pomotime')) {
         changeMinutesWithAnimation("25", "00");
+        // UPDATE PROGRESS BAR
+        progressbar(1500,1500);
     } else if (activeMode.classList.contains('shortbreak')) {
         changeMinutesWithAnimation("05", "00");
+        // UPDATE PROGRESS BAR
+        progressbar(300, 300);
     } else if (activeMode.classList.contains('longbreak')) {
         changeMinutesWithAnimation("15", "00");
+        // UPDATE PROGRESS BAR
+        progressbar(900, 900);
     }
 }
 
