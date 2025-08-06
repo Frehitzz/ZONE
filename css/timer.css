@@ -19,14 +19,18 @@
         .main-timer::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, 
-                rgba(102, 126, 234, 0.05) 0%, 
-                rgba(118, 75, 162, 0.05) 100%);
-            border-radius: 32px;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            background: conic-gradient(
+                from -180deg,
+                #ff0000 0deg,
+                #00ff88 var(--progress, 0deg),
+                pink var(--progress, 0deg),
+                brown 360deg
+            );
+            border-radius: 38px;
             z-index: -1;
         }
 
