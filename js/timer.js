@@ -1,8 +1,7 @@
 let sessioncount = 0;
 let soundPlaying = false; // Add flag to track sound state
 let totalTimerSeconds = 0;
-
-
+let MessageModal = "";
 
 function resetAllstyle(){
     const Allmodes = document.querySelectorAll('.pomotime, .shortbreak, .longbreak');
@@ -60,7 +59,7 @@ function to_pomo(){
     }
     
     resetAllstyle();
-    //FOR ANIMATION - Set to 25 minutes for Pomodoro
+    //FOR ANIMATION - Set to 25 minute for testing
     changeMinutesWithAnimation("25", "00");
 
     //RESET THE PROGRESBAR WHEN CLICKED THIS MODE
@@ -84,7 +83,7 @@ function to_shortb(){
     }
     
     resetAllstyle();
-    changeMinutesWithAnimation("05", "00");
+    changeMinutesWithAnimation("5", "00");
 
     //RESET THE PROGRESBAR WHEN CLICKED THIS MODE
     progressbar(300,300);
@@ -186,53 +185,22 @@ function startbutt(){
             // Timer finished - play sound first
             playsound();
             
-            // Show alert after a brief delay to allow sound to start
+            // Show modal with different messages based on current mode
             setTimeout(() => {
-                alert("Time's up!");
-                // Stop sound when user dismisses alert
-                stopsound();
-                
-                // AUTO PROGRESS: IF POMODORO FINISHED GO AUTOMATIC TO SHORT 
-                // GET WHO IS THE ACTIVE OF WHO IS HAVE THE .CLICKED-MODE
                 const activeMode = document.querySelector('.clicked-mode');
-
-                // IF THE SELECTED MODE IS POMOTIME
+                
                 if (activeMode.classList.contains('pomotime')) {
-                    sessioncount++; // ADD THE SESSION 
-                    console.log("Completed Pomodoro sessions:", sessioncount);
-                    
-                    // After 4 Pomodoro sessions, go to long break
-                    if (sessioncount % 4 === 0) {
-                        alert("Great job! You've completed 4 Pomodoro sessions. Time for a long break!");
-                        setTimeout(() => {
-                            to_longb(); // Switch to long break
-                            setTimeout(() => {
-                                startbutt(); // Auto-start the long break timer
-                            }, 500);
-                        }, 1000);
-                    } else {
-                        // Less than 4 sessions, go to short break
-                        setTimeout(() => {
-                            to_shortb(); // Switch to short break
-                            setTimeout(() => {
-                                startbutt(); // Auto-start the short break timer
-                            }, 500);
-                        }, 1000);
-                    }
+                    MessageModal = "Pomodoro session completed! Time for a break.";
                 } else if (activeMode.classList.contains('shortbreak')) {
-                    // After short break, go back to Pomodoro
-                    alert("Short break completed! Ready for next Pomodoro session.");
-                    setTimeout(() => {
-                        to_pomo(); // Switch back to Pomodoro (ready to start)
-                    }, 1000);
+                    MessageModal = "Short break finished! Ready for another Pomodoro?";
                 } else if (activeMode.classList.contains('longbreak')) {
-                    // After long break, reset session count and go back to Pomodoro
-                    sessioncount = 0; // Reset the cycle
-                    alert("Long break completed! Starting fresh Pomodoro cycle.");
-                    setTimeout(() => {
-                        to_pomo(); // Switch back to Pomodoro (ready to start)
-                    }, 1000);
+                    MessageModal = "Long break completed! Let's start fresh.";
                 }
+                
+                appearModal();
+                
+                // Don't auto-progress anymore - wait for user to close modal
+                // The progression logic will be moved to closeModal() function
             }, 500); // Small delay to let sound start playing
         }
     }, 1000); // Run every 1 second
@@ -398,3 +366,65 @@ function stopsound(){
         console.log("Audio element not found");
     }
 }
+
+function appearModal(){
+    const Mymodal = document.querySelector('.modal');
+    const modalText = document.querySelector('.modal-text');
+    
+    // Set the message content
+    modalText.textContent = MessageModal;
+    
+    // Show the modal
+    Mymodal.style.display = 'flex';
+}
+
+function closeModal(){
+    const Mymodal = document.querySelector('.modal');
+    
+    // Hide the modal
+    Mymodal.style.display = 'none';
+    
+    // Stop sound when modal is closed
+    stopsound();
+    
+    // NOW HANDLE AUTO PROGRESSION AFTER USER CLOSES MODAL
+    // GET WHO IS THE ACTIVE OF WHO IS HAVE THE .CLICKED-MODE
+    const activeMode = document.querySelector('.clicked-mode');
+
+    // IF THE SELECTED MODE IS POMOTIME
+    if (activeMode.classList.contains('pomotime')) {
+        sessioncount++; // ADD THE SESSION 
+        console.log("Completed Pomodoro sessions:", sessioncount);
+        
+        // After 4 Pomodoro sessions, go to long break
+        if (sessioncount % 4 === 0) {
+            setTimeout(() => {
+                to_longb(); // Switch to long break
+                setTimeout(() => {
+                    startbutt(); // Auto-start the long break timer
+                }, 500);
+            }, 500);
+        } else {
+            // Less than 4 sessions, go to short break
+            setTimeout(() => {
+                to_shortb(); // Switch to short break
+                setTimeout(() => {
+                    startbutt(); // Auto-start the short break timer
+                }, 500);
+            }, 500);
+        }
+    } else if (activeMode.classList.contains('shortbreak')) {
+        // After short break, go back to Pomodoro
+        setTimeout(() => {
+            to_pomo(); // Switch back to Pomodoro (ready to start)
+        }, 500);
+    } else if (activeMode.classList.contains('longbreak')) {
+        // After long break, reset session count and go back to Pomodoro
+        sessioncount = 0; // Reset the cycle
+        setTimeout(() => {
+            to_pomo(); // Switch back to Pomodoro (ready to start)
+        }, 500);
+    }
+}
+
+
