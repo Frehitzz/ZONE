@@ -1,0 +1,52 @@
+.modal{
+    display: none;
+    justify-content: center;
+    align-items: center; /* Better centering */
+    position: fixed;
+    z-index: 1000; /* Higher z-index */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5); /* Darker overlay */
+}
+
+.modal-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    background-color: rgba(168, 181, 240, 0.9); /* Match your theme */
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+}
+
+.modal-text{
+    color: white;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.rest-button{
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.rest-button:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
