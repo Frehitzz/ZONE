@@ -2,6 +2,8 @@ let sessioncount = 0;
 let soundPlaying = false; // Add flag to track sound state
 let totalTimerSeconds = 0;
 let MessageModal = "";
+let MessageToast = "";
+let toastTimeout; // Global variable to track toast timeout
 
 function resetAllstyle(){
     const Allmodes = document.querySelectorAll('.pomotime, .shortbreak, .longbreak');
@@ -83,7 +85,7 @@ function to_shortb(){
     }
     
     resetAllstyle();
-    changeMinutesWithAnimation("5", "00");
+    changeMinutesWithAnimation("05", "00");
 
     //RESET THE PROGRESBAR WHEN CLICKED THIS MODE
     progressbar(300,300);
@@ -259,7 +261,8 @@ function skipbutt(){
             
             // After 4 Pomodoro sessions (including skipped), go to long break
             if (sessioncount % 4 === 0) {
-                alert("Pomodoro skipped! You've completed 4 sessions - starting long break...");
+                MessageToast = "Pomodoro skipped! You've completed 4 sessions - starting long break...";
+                appearToast();
                 setTimeout(() => {
                     to_longb(); // Switch to long break
                     setTimeout(() => {
@@ -268,7 +271,9 @@ function skipbutt(){
                 }, 1000);
             } else {
                 // Less than 4 sessions, go to short break
-                alert("Pomodoro skipped! Starting short break...");
+                MessageToast = "Pomodoro skipped! Starting short break...";
+                appearToast();
+    
                 setTimeout(() => {
                     to_shortb(); // Switch to short break
                     setTimeout(() => {
@@ -278,21 +283,24 @@ function skipbutt(){
             }
         } else if (activeMode.classList.contains('shortbreak')) {
             // Skip Short Break → go back to Pomodoro
-            alert("Short break skipped! Ready for next Pomodoro session.");
+            MessageToast = "Short break skipped! Ready for next Pomodoro session.";
+            appearToast();
             setTimeout(() => {
                 to_pomo(); // Switch back to Pomodoro
             }, 1000);
         } else if (activeMode.classList.contains('longbreak')) {
             // Skip Long Break → reset session count and go back to Pomodoro  
             sessioncount = 0; // Reset the cycle
-            alert("Long break skipped! Starting fresh Pomodoro cycle.");
+            MessageToast = "Long break skipped! Starting fresh Pomodoro cycle.";
+            appearToast();
             setTimeout(() => {
                 to_pomo(); // Switch back to Pomodoro
             }, 1000);
         }
     } else {
         // If timer not running, just show current time remaining
-        alert("Timer is not running. Click start to begin countdown.");
+        MessageToast = "Timer is not running. Click start to begin countdown.";
+        appearToast();
     }
 }
 
@@ -427,4 +435,55 @@ function closeModal(){
     }
 }
 
+function appearToast(){
+    const toast = document.querySelector('.toast');
+    const toastContainer = document.querySelector('.toast-container');
+    const toastmess = document.querySelector('.toast-text');
+    
+    // Clear any existing timeout to prevent conflicts
+    if (toastTimeout) {
+        clearTimeout(toastTimeout);
+    }
+    
+    // If toast is already showing, hide it immediately first
+    if (toast.style.display === "flex") {
+        toastContainer.classList.add('hide');
+        toastContainer.classList.remove('show');
+        
+        // Wait for hide animation to complete, then show new message
+        setTimeout(() => {
+            showNewToast();
+        }, 400); // Wait for hide animation
+    } else {
+        // No toast currently showing, show immediately
+        showNewToast();
+    }
+    
+    function showNewToast() {
+        // Set the new message content
+        toastmess.textContent = MessageToast;
+
+        // Show the toast and trigger animation
+        toast.style.display = "flex";
+        
+        // Use setTimeout to ensure the display change has taken effect
+        setTimeout(() => {
+            toastContainer.classList.add('show');
+            toastContainer.classList.remove('hide');
+        }, 10);
+
+        // Hide after 3 seconds with animation
+        toastTimeout = setTimeout(() => {
+            toastContainer.classList.add('hide');
+            toastContainer.classList.remove('show');
+            
+            // Actually hide the element after animation completes
+            setTimeout(() => {
+                toast.style.display = "none";
+            }, 400); // Match animation duration
+        }, 3000);
+    }
+
+    return;
+}
 
