@@ -116,15 +116,17 @@ nav{
     color: rgb(255, 255, 255);
     background-color: none;
     text-shadow: 0 0 20px rgba(102, 126, 234, 0.63);
-    transition: transform 0.2s ease;;
+    transition: transform 0.2s ease;
+    transition: color 0.1s ease-out;
+
 }
 
 .fa-forward:hover, .fa-play:hover, .fa-stop:hover, .fa-pause:hover{
     transform: translateY(-5px);
 }
 
-.fa-forward:active{
-    color: rgb(2, 217, 255);
+.fa-forward:active, .fa-play:active, .fa-stop:active, .fa-pause:active{
+    color: black;
 }
 
 .skip-butt, .start-butt, .stop-butt{
