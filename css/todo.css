@@ -1,0 +1,178 @@
+.todo-container{
+    border: 1px solid rgba(255, 255, 255, 0.753);
+    border-radius: 54px;
+    height: 81%;
+}
+
+.todo-title{
+    margin: 0;
+    font-size: 30px;
+}
+
+.todo-top{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px 0 10px 0;
+    border-bottom: 1px solid black;
+}
+
+.fa-plus{
+    font-size: 25px;
+}
+
+.todo-modal{
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Better centering */
+    position: fixed;
+    z-index: 1000; /* Higher z-index */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5); /* Darker overlay */
+}
+
+.todo-modal-container{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    padding: 25px 0;
+    background-color: white; /* Match your theme */
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.input-todo{
+    border: none;
+    outline: none;
+    width: 100%;
+    max-width: 90%;
+    font-size: 25px;
+    padding-left: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid grey;
+}
+
+.buttons{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding-top: 20px;
+}
+
+.button-save, .button-cancel{
+    width: 140px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid rgb(106, 134, 255);
+}
+
+.button-save{
+    border: 2px solid rgb(106, 134, 255);
+}
+
+.button-cancel:hover{
+    border: 2px solid rgb(106, 134, 255);
+}
+
+
+
+
+
+
+
+
+/*
+ ROUNDED TOGGLE SWITCH
+*/
+.switch {
+  position: relative;
+  display: flex;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.toggles{
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    margin: 0;
+    padding: 0;
+    padding-left: 25px;
+}
+
+.slider-container{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.slider-container p {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    color: grey;
+    font-weight: 500;
+    font-family: "Roboto", sans-serif;
+}
