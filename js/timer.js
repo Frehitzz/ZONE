@@ -4,6 +4,36 @@ let totalTimerSeconds = 0;
 let MessageModal = "";
 let MessageToast = "";
 let toastTimeout; // Global variable to track toast timeout
+let startIndex = 0;  // Separate index for start messages
+let pauseIndex = 0;  // Separate index for pause messages
+let stopIndex = 0;   // Separate index for stop messages
+
+const startMessages = [
+    "You've got this!",
+    "Start now!",
+    "It's time to focus",
+    "Game on",
+    "Clock's Ticking",
+    "Focus Mode"
+];
+
+const pauseMessages = [
+    "Hit pause, not quit",
+    "Just a pit stop, champ",
+    "Just rest gang",
+    "Take a breathe",
+    "Timer Paused",
+    "Stay hydrated gang"
+];
+
+const stopMessages = [
+    "Back to square one",
+    "Reset complete",
+    "All the way back",
+    "Timer wiped clean",
+    "Zero. Again",
+    "Fresh countdown unlocked",
+];
 
 function resetAllstyle(){
     const Allmodes = document.querySelectorAll('.pomotime, .shortbreak, .longbreak');
@@ -122,6 +152,7 @@ let isRunning = false; // SET IT TO FALSE BECAUSE THE DEFAULT COUNTDOWN IS NOT R
 function startbutt(){
     // WHEN YOU CLICK AGAIN IT WILL PAUSE THE COUNTDOWN
     if (isRunning) { // CHECK IF THE TIMER IS RUNNING 
+        onPauseTimer(); // Show pause message
         stopsound(); // STOP SOUNDS WHEN PAUSING 
         clearInterval(timerInterval); // STOP THE COUNTDOWN
         isRunning = false; // SET TO FALSE BECAUSE ITS NOT RUNNING RN
@@ -132,6 +163,9 @@ function startbutt(){
         playIcon.className = 'fa-solid fa-play';
         return; // STOP THE FUNCTION
     }
+    
+    // Only show start message when actually starting (not pausing)
+    onStartTimer();
     
     //GETTING THE TIMER DISPLAY ON HTML AND MAKE IT A NUMBER
     const minutes = parseInt(document.getElementById("minutes").textContent);
@@ -212,6 +246,7 @@ function startbutt(){
 function stopbutt(){
     // Stop any playing sound
     stopsound();
+    onStopTimer();
     
     clearInterval(timerInterval);
     isRunning = false;
@@ -299,7 +334,7 @@ function skipbutt(){
         }
     } else {
         // If timer not running, just show current time remaining
-        MessageToast = "Timer is not running. Click start to begin countdown.";
+        MessageToast = "Timer is not running.";
         appearToast();
     }
 }
@@ -487,3 +522,43 @@ function appearToast(){
     return;
 }
 
+function onStartTimer() {
+    const toastStart = startMessages[startIndex];
+    MessageToast = toastStart;
+
+    startIndex++;
+
+    // IF ITS DISPLAY THE LAST, GO BACK AGAIN
+    if(startIndex >= startMessages.length){
+        startIndex = 0;
+    }
+
+    appearToast();
+}
+
+function onPauseTimer() {
+    const toastPause = pauseMessages[pauseIndex];
+    MessageToast = toastPause;
+
+    pauseIndex++;
+
+    if(pauseIndex >= pauseMessages.length){
+        pauseIndex = 0;
+    }
+
+   appearToast();
+}
+
+function onStopTimer(){
+    const toastStop = stopMessages[stopIndex];
+    MessageToast = toastStop;
+
+    stopIndex++;
+
+    if(stopIndex >= stopMessages.length){
+        stopIndex = 0;
+    }
+
+    appearToast();
+}
+ 
