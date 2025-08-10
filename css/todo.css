@@ -22,7 +22,7 @@
 }
 
 .todo-modal{
-    display: flex;
+    display: none; /*  Make this flex on js when the button is clicked */
     justify-content: center;
     align-items: center; /* Better centering */
     position: fixed;
@@ -39,7 +39,7 @@
     flex-direction: column;
     /* justify-content: center; */
     align-items: center;
-    padding: 25px 0;
+    padding: 25px;
     background-color: white; /* Match your theme */
     backdrop-filter: blur(20px);
     border-radius: 20px;
@@ -56,7 +56,6 @@
     width: 100%;
     max-width: 90%;
     font-size: 25px;
-    padding-left: 10px;
     margin-bottom: 20px;
     border-bottom: 1px solid grey;
 }
@@ -86,13 +85,7 @@
 
 
 
-
-
-
-
-/*
- ROUNDED TOGGLE SWITCH
-*/
+/* ROUNDED TOGGLE SWITCH */
 .switch {
   position: relative;
   display: flex;
@@ -175,4 +168,23 @@ input:checked + .slider:before {
     color: grey;
     font-weight: 500;
     font-family: "Roboto", sans-serif;
+}
+
+/*FOR NOTES*/
+.notes{
+  display: none;
+  
+}
+
+.notes-container{
+  width: 100%;
+  padding: 10px 0 0;
+  display: flex;
+  justify-content: center;
+}
+
+textarea{
+  width: 90%;
+  height: 150px;
+  resize: none;
 }
