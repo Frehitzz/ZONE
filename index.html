@@ -11,12 +11,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+    <!-- POMODORO MODAL -->
     <div class="modal">
         <div class="modal-container">
              <p class="modal-text"></p>
              <button class="rest-button" onclick="closeModal()">Close</button>
         </div>
     </div>
+    <!--todo LIST MODAL -->
     <div class="todo-modal">
         <div class="todo-modal-container">
             <input class="input-todo" type="text" placeholder="Drop your next challenge...">
@@ -24,14 +26,17 @@
             <div class="toggles">
                 <div class="slider-container">
                     <label class="switch">
-                        <input type="checkbox">
+                        <input type="checkbox" onclick="showNotes()">
                         <span class="slider round"></span>
                     </label>
                     <p>Add a Notes</p>
                 </div>
             </div>
+            <div class="notes-container">
+                <textarea class="notes" placeholder="What's on your mind..."></textarea>
+            </div>
                 <div class="buttons">
-                    <button class="button-cancel">Cancel</button>
+                    <button class="button-cancel" onclick="cancelbutt()">Cancel</button>
                     <button class="button-save">Save</button>
                 </div>
         </div>
@@ -109,5 +114,7 @@
     </div>
 
     <script src="js/timer.js"></script>
+    <script src="js/todo.js"></script>
+
 </body>
 </html>
