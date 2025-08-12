@@ -9,21 +9,23 @@ function savebutt(){
     //GET THE USER INPUT
     const mytodo = document.querySelector('.input-todo');
     const mynotes = document.querySelector('.notes');
+
     const usertodo = mytodo.value;
     const usernote = mynotes.value;
 
-    //GET THE DIV ON HTML WHERE WE GON DISPLAY THE TASK
-    const displaytodo = document.querySelector('.display-todo');
-    //DISPLAYING THE TASK ON HTML
-    displaytodo.innerHTML += "<div class='added-task'>" + "<input type='checkbox'>" + usertodo + "<div>" + usernote + "</div>" + "<i class='fa-solid fa-ellipsis-vertical'></i>" + "</div>";
-    // AFTER SAVING THE INPUT WILL BE CLEAR
-    mytodo.value = "";
-    mynotes.value = "";
-
+    Userinput(usertodo, usernote);
 
     //CLOSING THE MODAL AFTER ADDED A TASK
     cancelbutt();
 
+}
+
+function Userinput(task, note){
+    //GET THE DIV ON HTML WHERE WE GON DISPLAY THE TASK
+    const displaytodo = document.querySelector('.display-todo');
+    //DISPLAYING THE TASK ON HTML
+    displaytodo.innerHTML += "<div class='added-task'>" + "<div class='tasksonly'>" + "<div class='usertask-container'>" + "<input type='checkbox' class='task-checkb'>" + task + "</div>" + "<div class='three-dot'>" + "<i class='fa-solid fa-ellipsis-vertical' onclick='editTask()'></i>" + "</div>" + "</div>" + "<div class='notes-container'>"+ note + "</div>" + "</div>";
+    // AFTER SAVING THE INPUT WILL BE CLEAR
 }
 
 // HIDE THE MODAL
@@ -62,3 +64,11 @@ function showNotes(){
     }
 
 }
+
+function editTask(){
+    addbutt();
+
+
+    
+}
+     
