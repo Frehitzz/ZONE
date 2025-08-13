@@ -56,11 +56,11 @@ function renderTodos(){
                     <i class='fa-solid fa-ellipsis-vertical' onclick='editTask(${idx})'></i>
                 </div>
             </div>
-            <div class='notes-container'>${item.note}</div>
+            <div class='notes-container2'>${item.note}</div>
         </div>
     `;
     // item.task = SHOW THE TASK TEXT
-    // item.note = SHOW THE NOTE TEXT
+    // item.note = SHOW THE NOTE
     });             
 
 }
