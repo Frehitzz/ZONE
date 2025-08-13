@@ -1,6 +1,6 @@
 .todo-container{
     border: 1px solid rgba(255, 255, 255, 0.753);
-    border-radius: 54px;
+    border-radius: 20px;
     height: 81%;
 }
 
@@ -197,7 +197,7 @@ textarea{
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
   overflow:auto;
 }
 
@@ -205,7 +205,8 @@ textarea{
   width: 100%;
   max-width: 90%;
   padding: 10px;
-  border: 1px solid grey;
+  border: 1px solid rgb(106, 134, 255);
+  border-radius: 10px;
 }
 
 /* CONTAINER FOR THE TASKS AND 3 DOTS */
@@ -228,4 +229,19 @@ textarea{
 
 .task-checkb{
   margin-right: 10px;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  padding-right: 10px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 10px 15px 0 rgb(154, 231, 255); 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(106, 134, 255); 
+  border-radius: 10px;
 }
