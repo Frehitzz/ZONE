@@ -59,13 +59,11 @@
 }
 
 .input-todo{
-    border: none;
+    border: 1px solid black;
     outline: none;
     width: 100%;
     max-width: 90%;
     font-size: 25px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid grey;
 }
 
 .buttons{
@@ -266,4 +264,22 @@ textarea{
 .task-checkb{
   width: 15px;
   height: 15px;
+}
+
+.input-and-delete{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.fa-trash-can{
+  padding: 7.5px;
+  border: 1px solid black;
+}
+
+.delete-button{
+  display: none;
+  margin-left: 10px;
 }
