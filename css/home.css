@@ -29,14 +29,15 @@ nav{
 .layout{
     display: flex;
     justify-content: space-around;
-    height: 100vh;
-    padding-top: 30px ;
+    min-height: calc(100vh - 60px); /* Subtract nav height */
+    padding-top: 30px;
 }
 
 .todo-container{
     width: 100%;
-    height: 80vh;
     max-width: 20%;
+    min-height: min-content; /* Allow shrinking to content */
+    height: fit-content;
     border: 1px solid black;
 }
 
