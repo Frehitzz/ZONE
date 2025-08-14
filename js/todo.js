@@ -5,8 +5,10 @@ let todoIndex = null // TO TRACK WHAT TASK IS BEING EDITED
 // DISPLAY THE MODAL
 function addbutt(){
     const todoModal = document.querySelector('.todo-modal');
-
     todoModal.style.display = 'flex';
+
+    const deleteBtn = document.querySelector('.delete-button');
+    deleteBtn.style.display = "none";
 }
 
 function savebutt(){
@@ -71,6 +73,10 @@ function editTask(idx) {
     const mynotes = document.querySelector('.notes');
     const mycheckb = document.querySelector('.checkb');
 
+    //SHOWING THE DELETEBBUTTON WHEN EDITING
+    const deleteBtn = document.querySelector('.delete-button');
+    deleteBtn.style.display = "block";
+
     // Fill modal with selected task/note
     mytodo.value = todos[idx].task;
     mynotes.value = todos[idx].note;
@@ -86,6 +92,7 @@ function editTask(idx) {
 
     todoIndex = idx; // Set which task is being edited
     todoModal.style.display = 'flex';
+
 }
 
 
@@ -94,6 +101,9 @@ function cancelbutt(){
     // HIDING THE MODAL
     const todoModal = document.querySelector('.todo-modal');
     todoModal.style.display = 'none';
+
+    const deleteBtn = document.querySelector('.delete-button');
+    deleteBtn.style.display = "none";
 
 
     // CLEARING THE INPUT 
@@ -126,5 +136,9 @@ function showNotes(){
 
 }
 
-
+function deleteTask(idx){
+    todos.splice(idx, 1);
+    renderTodos();
+    cancelbutt();
+}
      
