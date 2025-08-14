@@ -45,6 +45,7 @@ function renderTodos(){
     const displaytodo = document.querySelector('.display-todo');
     displaytodo.innerHTML = "";
 
+
     // foreach TO LOOP THROUGH EVERY TODO TASK 
     todos.forEach((item,idx) => {  
     displaytodo.innerHTML += `
@@ -58,12 +59,18 @@ function renderTodos(){
                     <i class='fa-solid fa-ellipsis-vertical' onclick='editTask(${idx})'></i>
                 </div>
             </div>
-            <div class='notes-container2'>${item.note}</div>
+            
+            ${item.note ? `<div class='notes-container2'>${item.note}</div>` : ""}
         </div>
     `;
     // item.task = SHOW THE TASK TEXT
     // item.note = SHOW THE NOTE
-    });             
+
+    // ${item.note ? `<div class='notes-container2'>${item.note}</div>` : ""}
+    // If there’s a note, show it. If not, don’t show anything.
+
+    });      
+    
 
 }
 
@@ -137,8 +144,8 @@ function showNotes(){
 }
 
 function deleteTask(idx){
-    todos.splice(idx, 1);
-    renderTodos();
-    cancelbutt();
+    todos.splice(idx, 1); // REMOVE 1 ITEM AT A POSITION IDX
+    renderTodos(); // DISPLAY THE OR UPDATE THE LIST
+    cancelbutt();   // CLOSE THE MODAL AND CLEAR FIELDS
 }
      
