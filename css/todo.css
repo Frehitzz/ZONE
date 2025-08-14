@@ -2,8 +2,12 @@
 
 .todo-container{
     border: 2px solid white;
+    background-color: rgba(106, 133, 255, 0.603);
     border-radius: 20px;
-    height: 81%;
+    height: fit-content;
+    min-height: min-content;
+    display: flex;
+    flex-direction: column;
 }
 
 .todo-title{
@@ -13,16 +17,17 @@
 
 .todo-top{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    padding: 20px 0 10px 0;
-    background-color: white;
+    padding: 10px;
+    background-color: #605bbe;
     border-top-left-radius: 15px;   /* Match .todo-container */
     border-top-right-radius: 15px;  /* Match .todo-container */
     border-bottom-left-radius: 0;   /* Straight bottom */
     border-bottom-right-radius: 0;
     border-bottom: 1px solid white;
     font-family: "Roboto", sans-serif;
+    color: white;
 }
 
 .fa-plus{
@@ -203,15 +208,29 @@ textarea{
 
 /*FOR ADDED TASKS*/
 .display-todo{
-  height: 100%;
-  max-height: 81%;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  overflow:auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    overflow-y: auto;
+    max-height: 60vh; /* Set maximum height before scrolling */
 }
+
+.active-task{
+  width: 100%;
+  color: gray;
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  margin: 0;
+}
+
+.section-task{
+  margin-left: 10px;
+  color: white;
+}
+
+
 
 .added-task{
   width: 100%;
@@ -219,7 +238,7 @@ textarea{
   padding: 10px;
   border: 1px solid white;
   border-radius: 10px;
-  background-color: white;
+  background-color:white;
 }
 
 /* CONTAINER FOR THE TASKS AND 3 DOTS */
@@ -282,4 +301,51 @@ textarea{
 .delete-button{
   display: none;
   margin-left: 10px;
+}
+
+.completed-title{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* FOR COMPLETED TASK */
+.task-completed{
+    padding: 10px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    overflow-y: auto;
+    max-height: 60vh;
+}
+
+.complete-task{
+  width: 100%;
+  max-width: 90%;
+  padding: 10px;
+  border: 1px solid white;
+  border-radius: 10px;
+  background-color:white;
+}
+
+.complete-only{
+  display: flex;
+}
+
+.complete-task-container{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-family: "Roboto", sans-serif;
+}
+
+.complete-notes-container2{
+  width: auto;
+  margin-top: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  background-color: rgb(129, 219, 247);
+  border-radius: 5px;
 }
