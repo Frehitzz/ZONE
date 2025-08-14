@@ -52,7 +52,7 @@ function renderTodos(){
         <div class='added-task'>
             <div class='tasksonly'>
                 <div class='usertask-container'>
-                    <input type='checkbox' class='task-checkb'>
+                    <input type='checkbox' class='task-checkb' onclick='doneTask(${idx})'>
                     ${item.task}
                 </div>
                 <div class='three-dot'>
@@ -147,5 +147,11 @@ function deleteTask(idx){
     todos.splice(idx, 1); // REMOVE 1 ITEM AT A POSITION IDX
     renderTodos(); // DISPLAY THE OR UPDATE THE LIST
     cancelbutt();   // CLOSE THE MODAL AND CLEAR FIELDS
+}
+
+function doneTask(idx){
+    todos.splice(idx,1);
+
+    renderTodos();
 }
      
