@@ -1,6 +1,6 @@
 let todos = []; // FOR STORING TASKS AND NOTES
 let todoIndex = null // TO TRACK WHAT TASK IS BEING EDITED
-
+let completedTodo = [];
 
 // DISPLAY THE MODAL
 function addbutt(){
@@ -150,8 +150,42 @@ function deleteTask(idx){
 }
 
 function doneTask(idx){
-    todos.splice(idx,1);
+    const mycheckb = document.querySelector('.task-checkb');
+    const completeTask = document.querySelector('.task-completed');
+    const chevron = document.querySelector('.chevron');
+
+    if(mycheckb.checked){
+        // MOVE THE TASK TO THE COMPLETED TASKS ARRAY
+        const completedTodo = todos.splice(idx,1)[0];
+
+        completeTask.innerHTML += `
+        <div class='complete-task'>
+            <div class='complete-only'>
+                <div class='complete-task-container'>
+                    <input type='checkbox' class='complete-task-checkb' onclick='doneTask(${idx})'>
+                    ${completedTodo.task}
+                </div>
+                <div class='complete-three-dot'>
+                    <i class='fa-solid fa-ellipsis-vertical' onclick='editTask(${idx})'></i>
+                </div>
+            </div>
+            
+            ${completedTodo.note ? `<div class='complete-notes-container2'>${completedTodo.note}</div>` : ""}
+        </div>`;
+    }
 
     renderTodos();
 }
-     
+
+function showCompleted() {
+    const chevron = document.getElementById('chevron');
+    const completedSection = document.querySelector('.task-completed');
+    
+    if (completedSection.style.display === 'none' || completedSection.style.display === '') {
+        completedSection.style.display = 'flex';
+        chevron.innerHTML = '▶';
+    }else{
+        completedSection.style.display = 'none';
+        chevron.innerHTML = '▼';
+    }
+}
