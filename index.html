@@ -21,8 +21,12 @@
     <!--todo LIST MODAL -->
     <div class="todo-modal">
         <div class="todo-modal-container">
-            <input class="input-todo" type="text" placeholder="Drop your next challenge...">
-
+            <div class="input-and-delete">
+                <input class="input-todo" type="text" placeholder="Drop your next challenge...">
+                <div class="delete-button">
+                    <i class="fa-solid fa-trash-can"  onclick="deleteTask(todoIndex)"></i>
+                </div>
+            </div>
             <div class="toggles">
                 <div class="slider-container">
                     <label class="switch">
