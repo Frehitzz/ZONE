@@ -1,6 +1,7 @@
 let todos = []; // FOR STORING TASKS AND NOTES
 let todoIndex = null // TO TRACK WHAT TASK IS BEING EDITED
-let completedTodo = [];
+let completedTodo; // Temporary variable for task being moved to completed state
+let completedTodos = [] // Array to store and manage completed tasks
 
 // DISPLAY THE MODAL
 function addbutt(){
@@ -72,6 +73,37 @@ function renderTodos(){
     });      
     
 
+}
+
+function renderCompletedTask(){
+    // the div on ouur html wehre we store the compeleted task
+    const completeTask = document.querySelector('.task-completed');
+
+    completeTask.innerHTML = "";
+    
+    /* 
+    COMPLETED TODOS ARRAY ON TOP
+    - EACH COMPLETED TASK GET ITS OWN INDEX
+    - this allows to undoDone(idx) to know exactly whick task
+    is to move back on avtive task
+
+    */
+    completedTodos.forEach((task, idx) =>{
+        completeTask.innerHTML += `
+        <div class='complete-task'>
+            <div class='complete-only'>
+                <div class='complete-task-container'>
+                    <input type='checkbox' class='complete-task-checkb' checked onclick='undoDone(${idx})''>
+                    <p>${task.task}</p>
+                </div>
+                <div class='complete-three-dot'>
+                    <i class='fa-solid fa-ellipsis-vertical' onclick='editTask(${idx})'></i>
+                </div>
+            </div>
+            
+            ${task.note ? `<div class='complete-notes-container2'>${task.note}</div>` : ""}
+        </div>`;
+    });
 }
 
 function editTask(idx) {
@@ -150,31 +182,72 @@ function deleteTask(idx){
 }
 
 function doneTask(idx){
-    const mycheckb = document.querySelector('.task-checkb');
+    // GETTING THE EVERY ADDED TASK, THE [IDX] IS TO CHOOSE WHAT THE USER CLICKED 
+    // Find the specific task container at position [idx]
+    const taskElement = document.querySelectorAll('.added-task')[idx];
+
+    // Get the checkbox inside this specific task container
+    const mycheckb = taskElement.querySelector('.task-checkb');
+    
+    // the div on ouur html wehre we store the compeleted task
     const completeTask = document.querySelector('.task-completed');
-    const chevron = document.querySelector('.chevron');
 
     if(mycheckb.checked){
-        // MOVE THE TASK TO THE COMPLETED TASKS ARRAY
-        const completedTodo = todos.splice(idx,1)[0];
 
-        completeTask.innerHTML += `
-        <div class='complete-task'>
-            <div class='complete-only'>
-                <div class='complete-task-container'>
-                    <input type='checkbox' class='complete-task-checkb' onclick='doneTask(${idx})'>
-                    ${completedTodo.task}
-                </div>
-                <div class='complete-three-dot'>
-                    <i class='fa-solid fa-ellipsis-vertical' onclick='editTask(${idx})'></i>
-                </div>
-            </div>
+        // CHECKING ANIMATION
+        taskElement.classList.add('task-checking');
+
+        setTimeout(() =>{
+
+            taskElement.classList.add('task-disappearing');
+
+            setTimeout(() =>{
+        /*
+            idx : the position of the array where to start removing items
+            1 : how many items to remove.
+            [0] : take the removed array and get that first array from
+            the item that removed.
+        */
+            const completedTodo = todos.splice(idx,1)[0];
+
+            // MARK THIS AS COMPLETED
+            // means jsut for data tracking
+            completedTodo.completed = true;  
             
-            ${completedTodo.note ? `<div class='complete-notes-container2'>${completedTodo.note}</div>` : ""}
-        </div>`;
-    }
+            // ADD IT TO THE COMPLETED TASK ARRAY
+            completedTodos.push(completedTodo);
+            // SO THE FLOW IS THIS:
+            // todos -> completedTodo -> completedTOdos
 
-    renderTodos();
+            renderCompletedTask();
+            renderTodos();
+
+            }, 300); // MATCH WITH THE ANIMATION DURATION
+
+        },100); // TO WAIT THE CHECK ANIAMTION TO COMPELTE
+    }
+}   
+
+function undoDone(idx){
+    const taskToMove = completedTodos[idx];
+    
+    // IF THE USER CHOOSE THIS OR UNCHECKED
+    if(taskToMove){
+
+        // IT REMOVES THE TASK FROM COMPLETED TASK 
+        completedTodos.splice(idx,1);
+
+        // THEN PUSH AGAIN IT ON ACTIVE TASK
+        todos.push({
+            task: taskToMove.task,
+            note: taskToMove.note,
+            completed: false
+        });
+
+        renderCompletedTask();
+        renderTodos();
+
+    }
 }
 
 function showCompleted() {
