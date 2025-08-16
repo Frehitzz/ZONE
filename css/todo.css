@@ -93,9 +93,6 @@
     border: 2px solid rgb(106, 134, 255);
 }
 
-
-
-
 /* ROUNDED TOGGLE SWITCH */
 .switch {
   position: relative;
@@ -214,7 +211,7 @@ textarea{
     align-items: center;
     gap: 10px;
     overflow-y: auto;
-    max-height: 60vh; /* Set maximum height before scrolling */
+    max-height: 30vh; /* Set maximum height before scrolling */
 }
 
 .active-task{
@@ -369,7 +366,7 @@ textarea{
     align-items: center;
     gap: 10px;
     overflow-y: auto;
-    max-height: 60vh;
+    max-height: 20vh;
 }
 
 .complete-task{
@@ -405,4 +402,80 @@ textarea{
   background-color: rgba(129, 220, 247, 0.596);
   border-radius: 5px;
   text-decoration: line-through;
+}
+
+@media (max-width: 900px) {
+	.todo-container{
+		width: 95%;
+		max-width: 95%;
+	}
+	.display-todo {
+		padding: 10px;
+		max-height: 28vh;
+		overflow-y: auto;
+		align-items: stretch; /* left-align/stretch horizontally */
+	}
+	.added-task, .complete-task {
+		width: 100%;
+		max-width: 100%;
+		padding: 12px;
+	}
+	.completed-title{
+		padding: 8px;
+	}
+	.task-completed{
+		max-height: 22vh;
+		overflow-y: auto;
+		padding: 8px 10px;
+	}
+}
+
+/* Phone-specific adjustments */
+@media (max-width: 480px) {
+	/* Modal becomes near full-screen and easier to use */
+	.todo-modal {
+		justify-content: flex-start;
+		padding-top: 40px;
+	}
+	.todo-modal-container {
+		width: 96%;
+		max-width: 96%;
+		padding: 14px;
+		border-radius: 12px;
+	}
+	.input-todo{
+		font-size: 18px;
+	}
+	.buttons{
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+	.button-save, .button-cancel{
+		width: 100%;
+		height: 44px;
+	}
+	/* Increase hit area for icons */
+	.fa-plus, .fa-ellipsis-vertical, .fa-trash-can {
+		padding: 8px;
+		font-size: 20px;
+	}
+	/* List sizing */
+	.display-todo {
+		padding: 10px 8px;
+		gap: 8px;
+		max-height: 32vh;
+	}
+	.added-task, .complete-task{
+		padding: 12px;
+	}
+	.usertask-container, .complete-task-container{
+		font-size: 16px;
+	}
+	/* ensure empty messages remain centered and readable */
+	.empty-todos, .empty-completed {
+		align-self: center;
+		max-width: 90%;
+		padding: 12px;
+	}
 }
