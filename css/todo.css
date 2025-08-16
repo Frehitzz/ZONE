@@ -241,6 +241,48 @@ textarea{
   background-color:white;
 }
 
+.task-checking {
+    animation: checkTask 0.3s ease-in-out;
+}
+
+.task-disappearing {
+    animation: disappearTask 0.3s ease-out forwards;
+}
+
+@keyframes checkTask {
+    0% {
+        transform: scale(1);
+        background-color: white;
+    }
+    50% {
+        transform: scale(0.95);
+        background-color: #e0ffe0;
+    }
+    100% {
+        transform: scale(1);
+        background-color: rgba(138, 228, 255, 0.596);
+    }
+}
+
+@keyframes disappearTask {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+        background-color: #ffffff;
+    }
+    50% {
+        background-color: rgba(138, 228, 255, 0.596);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-100%);
+        background-color: rgba(90, 213, 250, 0.596);
+        height: 0;
+        margin: 0;
+        padding: 0;
+    }
+}
+
 /* CONTAINER FOR THE TASKS AND 3 DOTS */
 .tasksonly{
   display: flex;
@@ -261,9 +303,6 @@ textarea{
   color: white;
 }
 
-.task-checkb{
-  margin-right: 10px;
-}
 
 ::-webkit-scrollbar {
   width: 5px;
@@ -280,9 +319,10 @@ textarea{
   border-radius: 10px;
 }
 
-.task-checkb{
+.task-checkb, .complete-task-checkb{
   width: 15px;
   height: 15px;
+  margin-right: 10px;
 }
 
 .input-and-delete{
@@ -309,6 +349,18 @@ textarea{
   justify-content: space-between;
 }
 
+.completed-title p {
+  margin-left: 10px;
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  color: white;
+}
+
+.chevron{
+  margin-right: 10px;
+  color: white;
+}
+
 /* FOR COMPLETED TASK */
 .task-completed{
     padding: 10px;
@@ -324,13 +376,13 @@ textarea{
   width: 100%;
   max-width: 90%;
   padding: 10px;
-  border: 1px solid white;
   border-radius: 10px;
-  background-color:white;
+  background-color:rgba(255, 255, 255, 0.452);
 }
 
 .complete-only{
   display: flex;
+  align-items: center;
 }
 
 .complete-task-container{
@@ -340,12 +392,17 @@ textarea{
   font-family: "Roboto", sans-serif;
 }
 
+.complete-task-container p{
+  text-decoration: line-through;
+}
+
 .complete-notes-container2{
   width: auto;
   margin-top: 10px;
   padding: 10px;
   display: flex;
   align-items: center;
-  background-color: rgb(129, 219, 247);
+  background-color: rgba(129, 220, 247, 0.596);
   border-radius: 5px;
+  text-decoration: line-through;
 }
