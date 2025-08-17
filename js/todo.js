@@ -134,9 +134,12 @@ function editTask(idx) {
 
     // Show notes textarea if note exists
     if (todos[idx].note) {
-        mynotes.style.display = 'block';
         mycheckb.checked = true;
+        mynotes.style.display = 'block';
+        mynotes.offsetHeight; // Force reflow
+        mynotes.classList.add('show');
     } else {
+        mynotes.classList.remove('show');
         mynotes.style.display = 'none';
         mycheckb.checked = false;
     }
@@ -156,7 +159,6 @@ function cancelbutt(){
     const deleteBtn = document.querySelector('.delete-button');
     deleteBtn.style.display = "none";
 
-
     // CLEARING THE INPUT 
     const mytodo = document.querySelector('.input-todo');
     const mynotes = document.querySelector('.notes');
@@ -165,8 +167,11 @@ function cancelbutt(){
     mytodo.value = "";
     mynotes.value = "";
 
-    // HIDES TEXT AREA AND UNCHECKED THE SLIDER/CHECKB
-    mynotes.style.display = 'none';
+    // HIDES TEXT AREA WITH ANIMATION AND UNCHECKED THE SLIDER/CHECKB
+    mynotes.classList.remove('show');
+    setTimeout(() => {
+        mynotes.style.display = 'none';
+    }, 300);
     mycheckb.checked = false; 
 
     
@@ -176,15 +181,22 @@ function cancelbutt(){
 function showNotes(){
     const mycheckb = document.querySelector('.checkb');
     const mynotes = document.querySelector('.notes');
-    const notesDisplay = getComputedStyle(mynotes).display;
-
-    if(notesDisplay === "none"){
+    
+    if(mycheckb.checked){
+        // Show the textarea with animation
         mynotes.style.display = 'block';
-    }else if(notesDisplay === "block"){
-        mynotes.style.display = 'none';
-        mycheckb.checked = false;
+        // Force reflow to ensure display change takes effect
+        mynotes.offsetHeight;
+        // Add the show class for animation
+        mynotes.classList.add('show');
+    } else {
+        // Hide with animation
+        mynotes.classList.remove('show');
+        // Wait for animation to complete before hiding
+        setTimeout(() => {
+            mynotes.style.display = 'none';
+        }, 300); // Match the CSS transition duration
     }
-
 }
 
 function deleteTask(idx){
