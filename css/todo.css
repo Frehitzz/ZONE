@@ -64,11 +64,20 @@
 }
 
 .input-todo{
-    border: 1px solid black;
+    border: 2px solid rgb(106, 134, 255);
+    border-radius: 10px;
+    padding: 12px;
     outline: none;
     width: 100%;
-    max-width: 90%;
-    font-size: 25px;
+    max-width: 100%;
+    font-size: 20px;
+    transition: all 0.3 ease;
+}
+
+.input-todo:focus{
+    box-shadow: 0 4px 12px rgba(106, 134, 255, 0.3);
+    border-color: rgb(106, 134, 255);
+    transform: translateY(-2px);
 }
 
 .buttons{
@@ -160,13 +169,16 @@ input:checked + .slider:before {
     justify-content: left;
     margin: 0;
     padding: 0;
-    padding-left: 25px;
 }
 
 .slider-container{
     display: flex;
     align-items: center;
     gap: 15px;
+    padding: 10px;
+    background-color: rgba(197, 197, 197, 0.438);
+    border-radius: 10px;
+    width: 100%;
 }
 
 .slider-container p {
@@ -183,7 +195,34 @@ input:checked + .slider:before {
   display: none;
   width: 300px;
   margin-top: 10px;
+  width: 300px;
+  height: 0;
+  opacity: 0;
+  padding: 0 12px;
+  margin: 0;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  outline: none;
+  resize: none;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scaleY(0);
+  transform-origin: top;
   
+}
+
+.notes.show {
+  height: 150px;
+  opacity: 1;
+  padding: 12px;
+  margin-top: 10px;
+  border-color: rgb(106, 134, 255);
+  transform: scaleY(1);
+}
+
+.notes:focus {
+  border-color: rgb(80, 110, 255);
+  box-shadow: 0 2px 8px rgba(106, 134, 255, 0.2);
 }
 
 .notes-container2{
@@ -212,6 +251,7 @@ textarea{
     gap: 10px;
     overflow-y: auto;
     max-height: 30vh; /* Set maximum height before scrolling */
+    scroll-behavior: smooth;
 }
 
 .active-task{
@@ -402,6 +442,7 @@ textarea{
     max-height: 20vh;
     transition: 0.8s;
     border-radius: 20px;
+    scroll-behavior: smooth;
 }
 
 .complete-task{
