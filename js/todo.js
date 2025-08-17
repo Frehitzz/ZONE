@@ -3,6 +3,13 @@ let todoIndex = null // TO TRACK WHAT TASK IS BEING EDITED
 let completedTodo; // Temporary variable for task being moved to completed state
 let completedTodos = [] // Array to store and manage completed tasks
 
+
+// COUNT THE COMPLETED TASK
+function Countcomplete(){
+    const counter = document.querySelector('.counter');
+    counter.textContent = completedTodos.length;
+}
+
 // DISPLAY THE MODAL
 function addbutt(){
     const todoModal = document.querySelector('.todo-modal');
@@ -111,11 +118,14 @@ function renderCompletedTask(){
         <button onclick="clearAllcompleted()">CLEAR ALL</button>
     </div>
     `;
+
+    Countcomplete();
 }
 
 function clearAllcompleted(){
     completedTodos = [];
     renderCompletedTask();
+    Countcomplete();
 }
 
 function editTask(idx) {
@@ -146,7 +156,7 @@ function editTask(idx) {
 
     todoIndex = idx; // Set which task is being edited
     todoModal.style.display = 'flex';
-
+ 
 }
 
 
@@ -191,7 +201,7 @@ function showNotes(){
         mynotes.classList.add('show');
     } else {
         // Hide with animation
-        mynotes.classList.remove('show');
+        mynotes.classList. remove('show');
         // Wait for animation to complete before hiding
         setTimeout(() => {
             mynotes.style.display = 'none';
@@ -208,6 +218,7 @@ function deleteTask(idx){
 function completedDeleteTask(idx){
     completedTodos.splice(idx,1);
     renderCompletedTask();
+    Countcomplete();
 }
 
 function doneTask(idx){
@@ -250,6 +261,7 @@ function doneTask(idx){
 
             renderCompletedTask();
             renderTodos();
+            Countcomplete();
 
             }, 300); // MATCH WITH THE ANIMATION DURATION
 
