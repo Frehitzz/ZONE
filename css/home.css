@@ -175,7 +175,14 @@ nav{
 	}
 }
 
+
+/* FOR PHONE */
 @media (max-width: 480px) {
+
+    html, body {
+  overflow-x: hidden;
+    }
+
 	nav{
 		padding: 8px 12px;
 	}
@@ -192,6 +199,7 @@ nav{
 	.pomodoro-timer{
 		padding: 12px;
 		border-radius: 18px;
+        border: none;
 	}
 	.controls { width: 80%; }
 	.skip-butt, .start-butt, .stop-butt{
