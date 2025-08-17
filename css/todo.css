@@ -225,6 +225,7 @@ textarea{
 .section-task{
   margin-left: 10px;
   color: white;
+  margin: 10px;
 }
 
 
@@ -312,7 +313,7 @@ textarea{
 }
 
 ::-webkit-scrollbar-thumb {
-  background:rgb(154, 231, 255);
+  background: rgb(154, 231, 255);
   border-radius: 10px;
 }
 
@@ -330,7 +331,7 @@ textarea{
   margin-bottom: 10px;
 }
 
-.fa-trash-can{
+#trash{
   padding: 7.5px;
   border: 1px solid black;
 }
@@ -351,6 +352,7 @@ textarea{
   font-family: "Roboto", sans-serif;
   font-size: 18px;
   color: white;
+  margin: 10px;
 }
 
 .chevron{
@@ -367,6 +369,7 @@ textarea{
     gap: 10px;
     overflow-y: auto;
     max-height: 20vh;
+    transition: 0.8s;
 }
 
 .complete-task{
@@ -391,6 +394,7 @@ textarea{
 
 .complete-task-container p{
   text-decoration: line-through;
+  margin: 0;
 }
 
 .complete-notes-container2{
@@ -456,10 +460,16 @@ textarea{
 		height: 44px;
 	}
 	/* Increase hit area for icons */
-	.fa-plus, .fa-ellipsis-vertical, .fa-trash-can {
+	.fa-plus, .fa-ellipsis-vertical{
 		padding: 8px;
 		font-size: 20px;
 	}
+
+  #trash{
+    padding: 8px;
+		font-size: 20px;
+  }
+
 	/* List sizing */
 	.display-todo {
 		padding: 10px 8px;
@@ -478,4 +488,30 @@ textarea{
 		max-width: 90%;
 		padding: 12px;
 	}
+}
+
+/* CLEAR ALL BUTTON */
+.clear-all {
+    display: none;
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.clear-all.show {
+    display: block;
+}
+
+.clear-all button {
+    padding: 8px 16px;
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: "Roboto", sans-serif;
+}
+
+.clear-all button:hover {
+    background-color: #ff5252;
 }
