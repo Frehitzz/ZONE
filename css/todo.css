@@ -21,17 +21,24 @@
     align-items: center;
     padding: 10px;
     background-color: #605bbe;
-    border-top-left-radius: 15px;   /* Match .todo-container */
-    border-top-right-radius: 15px;  /* Match .todo-container */
+    border-top-left-radius: 16px;   /* Match .todo-container */
+    border-top-right-radius: 16px;  /* Match .todo-container */
     border-bottom-left-radius: 0;   /* Straight bottom */
     border-bottom-right-radius: 0;
     border-bottom: 1px solid white;
+    border-top: 1px solid white;
     font-family: "Roboto", sans-serif;
     color: white;
 }
 
 .fa-plus{
     font-size: 25px;
+    transition: 0.3s;
+}
+
+.fa-plus:hover{
+  transform: translateY(2px);
+  color: rgba(255, 255, 255, 0.596);
 }
 
 .todo-modal{
@@ -91,15 +98,36 @@
     width: 140px;
     height: 40px;
     border-radius: 5px;
-    border: 1px solid rgb(106, 134, 255);
+    border: 2px solid rgb(106, 134, 255);
+}
+
+.button-cancel{
+    border: 2px solid rgb(106, 134, 255);
+    background-color: transparent;
+    color: rgb(106, 134, 255);
+    cursor: pointer;
+    transition: all 0.3s ease; /* Add smooth transition */
+}
+
+.button-cancel:hover{
+    border: 2px solid rgba(106, 133, 255, 0.678);
+    background-color: rgba(106, 133, 255, 0.1);
+    transform: translateY(-3px); /* Move up 3px */
+    box-shadow: 0 4px 12px rgba(106, 134, 255, 0.3); /* Add shadow for lift effect */
 }
 
 .button-save{
     border: 2px solid rgb(106, 134, 255);
+    background-color: rgb(106, 134, 255);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Add smooth transition */
 }
 
-.button-cancel:hover{
-    border: 2px solid rgb(106, 134, 255);
+.button-save:hover{
+    background-color: rgb(80, 110, 255);
+    transform: translateY(-3px); /* Move up 3px */
+    box-shadow: 0 4px 12px rgba(106, 134, 255, 0.4); /* Add shadow for lift effect */
 }
 
 /* ROUNDED TOGGLE SWITCH */
@@ -179,6 +207,11 @@ input:checked + .slider:before {
     background-color: rgba(197, 197, 197, 0.438);
     border-radius: 10px;
     width: 100%;
+    transition: 0.3s;
+}
+
+.slider-container:hover{
+  background-color: rgba(197, 197, 197, 0.61);
 }
 
 .slider-container p {
@@ -208,6 +241,7 @@ input:checked + .slider:before {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   transform: scaleY(0);
   transform-origin: top;
+  font-family: "Roboto", sans-serif;
   
 }
 
@@ -233,6 +267,8 @@ input:checked + .slider:before {
   align-items: center;
   background-color: rgb(129, 219, 247);
   border-radius: 5px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
 }
 
 
@@ -258,7 +294,7 @@ textarea{
   width: 100%;
   color: gray;
   font-family: "Roboto", sans-serif;
-  font-size: 20px;
+  font-size: 16px;
   margin: 0;
 }
 
@@ -336,9 +372,13 @@ textarea{
 }
 
 .fa-ellipsis-vertical{
-  padding: 3px;
-  background-color: #ccc;
-  color: white;
+  padding: 5px;
+  color: grey;
+  transition: 0.3s;
+}
+
+.fa-ellipsis-vertical:hover{
+  color: black;
 }
 
 /* SCROLLBAR FOR COMPLTED TASK */
@@ -403,9 +443,17 @@ textarea{
 }
 
 #trash{
-  padding: 7.5px;
-  border: 1px solid black;
+  padding: 13px;
+  border: 2px solid red;
+  border-radius: 10px;
+  transition: 0.3s;
 }
+
+#trash:hover{
+  background-color: rgb(224, 3, 3);
+  color: white;
+}
+
 
 .delete-button{
   display: none;
@@ -421,7 +469,7 @@ textarea{
 .completed-title p {
   margin-left: 10px;
   font-family: "Roboto", sans-serif;
-  font-size: 18px;
+  font-size: 15px;
   color: white;
   margin: 10px;
 }
@@ -479,6 +527,7 @@ textarea{
   background-color: rgba(129, 220, 247, 0.596);
   border-radius: 5px;
   text-decoration: line-through;
+  font-family: "Roboto", sans-serif;
 }
 
 @media (max-width: 900px) {
@@ -509,14 +558,26 @@ textarea{
 
 /* Phone-specific adjustments */
 @media (max-width: 480px) {
+
+  .todo-top{
+    border-radius: 10px;
+    border: none;
+  }
+
+  .todo-container{
+    width: 90%;
+  }
+
 	/* Modal becomes near full-screen and easier to use */
 	.todo-modal {
-		justify-content: flex-start;
-		padding-top: 40px;
+		justify-content: center;
+    align-items:baseline;
+		padding: 0;
 	}
 	.todo-modal-container {
+    margin-top: 100px;
 		width: 96%;
-		max-width: 96%;
+		max-width: 80%;
 		padding: 14px;
 		border-radius: 12px;
 	}
@@ -548,9 +609,15 @@ textarea{
 		padding: 10px 8px;
 		gap: 8px;
 		max-height: 32vh;
+    overflow: hidden;
 	}
+
+  .added-task{
+    max-width: 95%;
+  }
+
 	.added-task, .complete-task{
-		padding: 12px;
+		padding: 10px;
 	}
 	.usertask-container, .complete-task-container{
 		font-size: 16px;
@@ -561,6 +628,10 @@ textarea{
 		max-width: 90%;
 		padding: 12px;
 	}
+
+  .notes{
+    width: 250px;
+  }
 }
 
 /* CLEAR ALL BUTTON */
@@ -587,4 +658,12 @@ textarea{
 
 .clear-all button:hover {
     background-color: #ff5252;
+}
+
+.counter{
+  padding: 1px 5px 1px 5px;
+  background-color: rgba(252, 252, 252, 0.582);
+  font-size: 16px;
+  border-radius: 100%;
+  color: rgb(0, 0, 0);
 }
