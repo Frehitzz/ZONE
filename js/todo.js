@@ -78,6 +78,7 @@ function renderTodos(){
 function renderCompletedTask(){
     // the div on ouur html wehre we store the compeleted task
     const completeTask = document.querySelector('.task-completed');
+    const clearAll = document.querySelector('.clear-all');
 
     completeTask.innerHTML = "";
     
@@ -97,13 +98,24 @@ function renderCompletedTask(){
                     <p>${task.task}</p>
                 </div>
                 <div class='complete-three-dot'>
-                    <i class='fa-solid fa-ellipsis-vertical' onclick='editTask(${idx})'></i>
+                    <i class="fa-solid fa-trash-can" id="trash-completed"  onclick="completedDeleteTask(${idx})"></i>
                 </div>
             </div>
             
             ${task.note ? `<div class='complete-notes-container2'>${task.note}</div>` : ""}
         </div>`;
     });
+
+    completeTask.innerHTML += `
+    <div class="clear-all ${completedTodos.length > 0 ? 'show' : ''}">
+        <button onclick="clearAllcompleted()">CLEAR ALL</button>
+    </div>
+    `;
+}
+
+function clearAllcompleted(){
+    completedTodos = [];
+    renderCompletedTask();
 }
 
 function editTask(idx) {
@@ -179,6 +191,11 @@ function deleteTask(idx){
     todos.splice(idx, 1); // REMOVE 1 ITEM AT A POSITION IDX
     renderTodos(); // DISPLAY THE OR UPDATE THE LIST
     cancelbutt();   // CLOSE THE MODAL AND CLEAR FIELDS
+}
+
+function completedDeleteTask(idx){
+    completedTodos.splice(idx,1);
+    renderCompletedTask();
 }
 
 function doneTask(idx){
