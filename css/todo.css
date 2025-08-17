@@ -301,20 +301,51 @@ textarea{
   color: white;
 }
 
+/* SCROLLBAR FOR COMPLTED TASK */
 
-::-webkit-scrollbar {
-  width: 5px;
-  padding-right: 10px;
+.task-completed::-webkit-scrollbar {
+    width: 4px; /* Thinner scrollbar */
 }
 
-::-webkit-scrollbar-track {
-  box-shadow: inset 10px 15px 0 rgb(185, 198, 255); 
-  border-radius: 10px;
+.task-completed::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    margin: 5px; /* Add margin to keep it inside borders */
 }
 
-::-webkit-scrollbar-thumb {
-  background: rgb(154, 231, 255);
-  border-radius: 10px;
+.task-completed::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 4px;
+}
+
+.task-completed::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+.task-checkb, .complete-task-checkb{
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+}
+
+/* SCROLLBAR FOR ACTIVE TASK */
+
+.display-todo::-webkit-scrollbar {
+    width: 4px; /* Thinner scrollbar */
+}
+
+.display-todo::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    margin: 5px; /* Add margin to keep it inside borders */
+}
+
+.display-todo::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 4px;
+}
+
+.display-todo::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.8);
 }
 
 .task-checkb, .complete-task-checkb{
@@ -370,6 +401,7 @@ textarea{
     overflow-y: auto;
     max-height: 20vh;
     transition: 0.8s;
+    border-radius: 20px;
 }
 
 .complete-task{
