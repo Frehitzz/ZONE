@@ -24,7 +24,7 @@
             <div class="input-and-delete">
                 <input class="input-todo" type="text" placeholder="Drop your next challenge...">
                 <div class="delete-button">
-                    <i class="fa-solid fa-trash-can"  onclick="deleteTask(todoIndex)"></i>
+                    <i class="fa-solid fa-trash-can" id="trash"  onclick="deleteTask(todoIndex)"></i>
                 </div>
             </div>
             <div class="toggles">
@@ -76,6 +76,11 @@
 
                 <div class="task-completed">
                     <!-- PUT THE COMPLETED TASK HERE -->
+
+                    <!-- CLEAR ALL BUTTON -->
+                    <div class="clear-all">
+                        <button>CLEAR ALL</button>
+                    </div>
                 </div>
             </div>
         </div>
