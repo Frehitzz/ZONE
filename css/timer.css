@@ -129,3 +129,9 @@
             opacity: 1;
             transform: scale(1);
         }
+
+@media (max-width: 480px){
+    .time-value{
+        font-size: 100px;
+    }
+}
