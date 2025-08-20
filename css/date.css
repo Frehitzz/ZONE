@@ -1,0 +1,27 @@
+/* Add to your CSS file */
+.calendar {
+    margin: 0;
+    /* padding: 10px; */
+    box-sizing: border-box;
+}
+
+.calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 0.95rem;
+    table-layout: fixed; /* Ensures columns fit evenly */
+}
+
+.calendar-table th, .calendar-table td {
+    border: 1px solid #ccc;
+    text-align: center;
+    padding: 6px;
+    width: 1%; /* Let table-layout: fixed handle the sizing */
+    box-sizing: border-box;
+    word-break: break-all;
+}
+
+.calendar-table th {
+    background: #f0f0f0;
+}
