@@ -50,6 +50,21 @@ function progressbar(currentseconds,totalSeconds){
     maintTimer.style.setProperty('--progress',`${progress}deg`);
 }
 
+// Helper to update the document title with timer and mode
+function updateTitle(minutes, seconds, mode) {
+    let modeLabel = '';
+    if (mode === 'pomotime') modeLabel = 'Pomodoro';
+    else if (mode === 'shortbreak') modeLabel = 'Short Break';
+    else if (mode === 'longbreak') modeLabel = 'Long Break';
+    else modeLabel = '';
+    document.title = `${minutes}:${seconds} - ${modeLabel} | Zone`;
+}
+
+// Helper to reset the document title to default
+function resetTitle() {
+    document.title = 'Zone';
+}
+
 function changeMinutesWithAnimation(newMinutes, newSeconds) {
     const minutesElement = document.getElementById("minutes");
     const secondsElement = document.getElementById("seconds");
@@ -75,6 +90,16 @@ function changeMinutesWithAnimation(newMinutes, newSeconds) {
             secondsElement.classList.remove('fade-in');
         }, 600);
     }, 450); //transition duration
+
+    // Also update the title with the new mode and time
+    const activeMode = document.querySelector('.clicked-mode');
+    let mode = '';
+    if (activeMode) {
+        if (activeMode.classList.contains('pomotime')) mode = 'pomotime';
+        else if (activeMode.classList.contains('shortbreak')) mode = 'shortbreak';
+        else if (activeMode.classList.contains('longbreak')) mode = 'longbreak';
+    }
+    updateTitle(newMinutes, newSeconds, mode);
 }
 
 //TYPES OF TIMER
@@ -207,7 +232,17 @@ function startbutt(){
         // Update the display
         document.getElementById("minutes").textContent = formattedMinutes;
         document.getElementById("seconds").textContent = formattedSeconds;
-        
+
+        // Update the title with the countdown and mode
+        const activeMode = document.querySelector('.clicked-mode');
+        let mode = '';
+        if (activeMode) {
+            if (activeMode.classList.contains('pomotime')) mode = 'pomotime';
+            else if (activeMode.classList.contains('shortbreak')) mode = 'shortbreak';
+            else if (activeMode.classList.contains('longbreak')) mode = 'longbreak';
+        }
+        updateTitle(formattedMinutes, formattedSeconds, mode);
+
         // CHECK IF TIMER IS FINISHES
         if (totalSeconds <= 0) {
             // STOP THE COUNTDOWN
@@ -238,6 +273,9 @@ function startbutt(){
                 // Don't auto-progress anymore - wait for user to close modal
                 // The progression logic will be moved to closeModal() function
             }, 500); // Small delay to let sound start playing
+
+            // Reset the title to default after timer ends
+            resetTitle();
         }
     }, 1000); // Run every 1 second
 }
@@ -271,6 +309,8 @@ function stopbutt(){
         // UPDATE PROGRESS BAR
         progressbar(900, 900);
     }
+
+    resetTitle();
 }
 
 // Skip button functionality
@@ -337,6 +377,8 @@ function skipbutt(){
         MessageToast = "Timer is not running.";
         appearToast();
     }
+
+    resetTitle();
 }
 
 function playsound(){
@@ -468,6 +510,8 @@ function closeModal(){
             to_pomo(); // Switch back to Pomodoro (ready to start)
         }, 500);
     }
+
+    resetTitle();
 }
 
 function appearToast(){
@@ -561,4 +605,4 @@ function onStopTimer(){
 
     appearToast();
 }
- 
+
