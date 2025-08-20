@@ -3,6 +3,19 @@ let todoIndex = null // TO TRACK WHAT TASK IS BEING EDITED
 let completedTodo; // Temporary variable for task being moved to completed state
 let completedTodos = [] // Array to store and manage completed tasks
 
+// Load from localStorage
+function loadTodosFromStorage() {
+    const todosData = localStorage.getItem('todos');
+    const completedData = localStorage.getItem('completedTodos');
+    todos = todosData ? JSON.parse(todosData) : [];
+    completedTodos = completedData ? JSON.parse(completedData) : [];
+}
+
+// Save to localStorage
+function saveTodosToStorage() {
+    localStorage.setItem('todos', JSON.stringify(todos));
+    localStorage.setItem('completedTodos', JSON.stringify(completedTodos));
+}
 
 // COUNT THE COMPLETED TASK
 function Countcomplete(){
@@ -42,7 +55,7 @@ function savebutt(){
         // THIS FOR DISPALYING THE NEW TASK 
         todos.push({task: usertodo, note: usernote});
     }
-
+    saveTodosToStorage(); // Save after change
     renderTodos(); // UPDATE THE DISPLAY
     cancelbutt(); //CLOSING THE MODAL AFTER ADDED A TASK
 
@@ -78,8 +91,8 @@ function renderTodos(){
     // If there’s a note, show it. If not, don’t show anything.
 
     });      
-    
-
+    // After rendering, save to storage in case of reordering or other changes
+    saveTodosToStorage();
 }
 
 function renderCompletedTask(){
@@ -120,10 +133,12 @@ function renderCompletedTask(){
     `;
 
     Countcomplete();
+    saveTodosToStorage();
 }
 
 function clearAllcompleted(){
     completedTodos = [];
+    saveTodosToStorage();
     renderCompletedTask();
     Countcomplete();
 }
@@ -211,12 +226,14 @@ function showNotes(){
 
 function deleteTask(idx){
     todos.splice(idx, 1); // REMOVE 1 ITEM AT A POSITION IDX
+    saveTodosToStorage();
     renderTodos(); // DISPLAY THE OR UPDATE THE LIST
     cancelbutt();   // CLOSE THE MODAL AND CLEAR FIELDS
 }
 
 function completedDeleteTask(idx){
     completedTodos.splice(idx,1);
+    saveTodosToStorage();
     renderCompletedTask();
     Countcomplete();
 }
@@ -256,9 +273,7 @@ function doneTask(idx){
             
             // ADD IT TO THE COMPLETED TASK ARRAY
             completedTodos.push(completedTodo);
-            // SO THE FLOW IS THIS:
-            // todos -> completedTodo -> completedTOdos
-
+            saveTodosToStorage();
             renderCompletedTask();
             renderTodos();
             Countcomplete();
@@ -284,7 +299,7 @@ function undoDone(idx){
             note: taskToMove.note,
             completed: false
         });
-
+        saveTodosToStorage();
         renderCompletedTask();
         renderTodos();
 
@@ -303,3 +318,8 @@ function showCompleted() {
         chevron.innerHTML = '▼';
     }
 }
+
+// On page load, load from storage and render
+loadTodosFromStorage();
+renderTodos();
+renderCompletedTask();
