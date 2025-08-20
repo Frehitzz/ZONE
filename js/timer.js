@@ -1,12 +1,12 @@
 let sessioncount = 0;
-let soundPlaying = false; // Add flag to track sound state
+let soundPlaying = false; // ! Add flag to track sound state
 let totalTimerSeconds = 0;
 let MessageModal = "";
 let MessageToast = "";
-let toastTimeout; // Global variable to track toast timeout
-let startIndex = 0;  // Separate index for start messages
-let pauseIndex = 0;  // Separate index for pause messages
-let stopIndex = 0;   // Separate index for stop messages
+let toastTimeout; //! Global variable to track toast timeout
+let startIndex = 0;  //! Separate index for start messages
+let pauseIndex = 0;  //! Separate index for pause messages
+let stopIndex = 0;   //! Separate index for stop messages
 
 const startMessages = [
     "You've got this!",
