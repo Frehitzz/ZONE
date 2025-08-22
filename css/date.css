@@ -26,10 +26,9 @@
     background: #f0f0f0;
 }
 
-td-active{
-    background-color: pink;
-}
+/* CHANING BG COLOR DEPENDS ON SESSION */
+.date-today      { background: #d2f0fd; color: #222; } /* default */
+.date-today-low  { background: #81d4fa; color: #222; }
+.date-today-mid  { background: #29b6f6; color: #fff; }
+.date-today-high { background: #0288d1; color: #fff; }
 
-.date-today{
-    background-color: pink;
-}
