@@ -1,4 +1,3 @@
-let sessioncount = Number(localStorage.getItem('sessioncount')) || 0;
 let soundPlaying = false; // ! Add flag to track sound state
 let totalTimerSeconds = 0;
 let MessageModal = "";
@@ -7,6 +6,31 @@ let toastTimeout; //! Global variable to track toast timeout
 let startIndex = 0;  //! Separate index for start messages
 let pauseIndex = 0;  //! Separate index for pause messages
 let stopIndex = 0;   //! Separate index for stop messages
+
+let sessioncount = Number(localStorage.getItem('sessioncount')) || 0;
+
+//* RESETTIN SSESSIOUN COUNT EVERY ANOTHER DAY
+//? USED TO STORE THE DATE OF THE LAST SESSION
+const todayKey = 'sessionDate';
+
+//? GETS TODAY'S DATE
+const todayString = new Date().toDateString();
+
+//? GET THE LAST SAVED SESSION DATE ON LOCALSTORAGE
+const lastSessionDate = localStorage.getItem(todayKey);
+
+//? CHECK IF THE LAST SAVE DATE OF SESSION IS NOT EQUAL TO TODAYS DATE ( MEANIN ITS A NEW DAY)
+if (lastSessionDate !== todayString) {
+    
+    //? IF ITS A NEW DAY RESET THHE SESSIONCOUNT
+    sessioncount = 0;
+
+    //? SAVE THE NEW SESSION COUNT TO LOCAL STORAE
+    localStorage.setItem('sessioncount', sessioncount);
+
+    //? SAVE TODAYS DATE ON LOCALSTORAEG SO THAT NEXTTIME YOU CAN CHCEK IF DAY HAS CHANGED
+    localStorage.setItem(todayKey, todayString);
+}
 
 const startMessages = [
     "You've got this!",
@@ -333,7 +357,10 @@ function skipbutt(){
         if (activeMode.classList.contains('pomotime')) {
             sessioncount++;
             console.log("Skipped Pomodoro sessions:", sessioncount);
+            //SAVE SESSION COUNT ON LOCAL STORAEG
             localStorage.setItem('sessioncount', sessioncount);
+            //SAVE THE LAST SESSION DATE ON LOCAL STORAGE
+            localStorage.setItem(todayKey, todayString);
             
             // After 4 Pomodoro sessions (including skipped), go to long break
             if (sessioncount % 4 === 0) {
@@ -481,7 +508,10 @@ function closeModal(){
     if (activeMode.classList.contains('pomotime')) {
         sessioncount++; // ADD THE SESSION 
         console.log("Completed Pomodoro sessions:", sessioncount);
+        //SAVE SESSION COUNT ON LOCAL STORAEG
         localStorage.setItem('sessioncount', sessioncount);
+        //SAVE THE LAST SESSION DATE ON LOCAL STORAGE
+        localStorage.setItem(todayKey, todayString);
         
         // After 4 Pomodoro sessions, go to long break
         if (sessioncount % 4 === 0) {
@@ -607,4 +637,3 @@ function onStopTimer(){
 
     appearToast();
 }
-
