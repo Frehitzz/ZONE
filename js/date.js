@@ -30,18 +30,27 @@ document.addEventListener('DOMContentLoaded', function(){
     displayMonth.textContent = months[mydate.getMonth()];
 
     function getSessionClass(session) {
-        if(session >= 6){
-            return 'date-today-veryhigh';
-        }else if (session >= 4){
-            return 'date-today-high';
-        }else if (session >= 2){
-            return 'date-today-mid';
-        }else if (session >= 1){
-            return 'date-today-low';
-        }else{
-            return 'date-today';
-        }
+    if (session >= 8) {
+        return 'date-today-8';
+    } else if (session >= 7) {
+        return 'date-today-7';
+    } else if (session >= 6) {
+        return 'date-today-6';
+    } else if (session >= 5) {
+        return 'date-today-5';
+    } else if (session >= 4) {
+        return 'date-today-4';
+    } else if (session >= 3) {
+        return 'date-today-3';
+    } else if (session >= 2) {
+        return 'date-today-2';
+    } else if (session >= 1) {
+        return 'date-today-1';
+    } else {
+        return 'date-today'; // no session
     }
+}
+
 
     function myCalendar(year, month){
         //* GET THE DAY OF THE WEEK FOR THE 1ST OF THE MONTH
@@ -118,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function(){
             ? the code adds class="date-today" to the <td> element; otherwise, 
             ? it leaves the <td> without any extra class.
             */
-            calendarHTML += `<td${tdClass ? ` class="${tdClass}"` : ''}${tdId}>${day}</td>`;
+            calendarHTML += `<td${tdClass ? ` class="${tdClass}"` : ''}${tdId}><div>${day}</div></td>`;
         }
 
         //* Empty cells after the last day
