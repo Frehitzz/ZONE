@@ -1,4 +1,4 @@
-let sessioncount = 0;
+let sessioncount = Number(localStorage.getItem('sessioncount')) || 0;
 let soundPlaying = false; // ! Add flag to track sound state
 let totalTimerSeconds = 0;
 let MessageModal = "";
@@ -333,6 +333,7 @@ function skipbutt(){
         if (activeMode.classList.contains('pomotime')) {
             sessioncount++;
             console.log("Skipped Pomodoro sessions:", sessioncount);
+            localStorage.setItem('sessioncount', sessioncount);
             
             // After 4 Pomodoro sessions (including skipped), go to long break
             if (sessioncount % 4 === 0) {
@@ -365,7 +366,7 @@ function skipbutt(){
             }, 1000);
         } else if (activeMode.classList.contains('longbreak')) {
             // Skip Long Break → reset session count and go back to Pomodoro  
-            sessioncount = 0; // Reset the cycle
+            // sessioncount = 0; // Reset the cycle
             MessageToast = "Long break skipped! Starting fresh Pomodoro cycle.";
             appearToast();
             setTimeout(() => {
@@ -480,6 +481,7 @@ function closeModal(){
     if (activeMode.classList.contains('pomotime')) {
         sessioncount++; // ADD THE SESSION 
         console.log("Completed Pomodoro sessions:", sessioncount);
+        localStorage.setItem('sessioncount', sessioncount);
         
         // After 4 Pomodoro sessions, go to long break
         if (sessioncount % 4 === 0) {
@@ -505,7 +507,7 @@ function closeModal(){
         }, 500);
     } else if (activeMode.classList.contains('longbreak')) {
         // After long break, reset session count and go back to Pomodoro
-        sessioncount = 0; // Reset the cycle
+        // sessioncount = 0; // Reset the cycle
         setTimeout(() => {
             to_pomo(); // Switch back to Pomodoro (ready to start)
         }, 500);
