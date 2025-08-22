@@ -25,3 +25,11 @@
 .calendar-table th {
     background: #f0f0f0;
 }
+
+td-active{
+    background-color: pink;
+}
+
+.date-today{
+    background-color: pink;
+}
