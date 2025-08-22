@@ -1,9 +1,16 @@
 //* USES A DOMCONTENT LOADED TO PERFECTLY DISPLAY THE MONTH
 document.addEventListener('DOMContentLoaded', function(){
 
+    const today = new Date();
+    const todayDate = today.getDate();
+    const todayMonth = today.getMonth();
+    const todayYear =today.getFullYear();
+
+
     //* THE CLASS WHERE WE STORE THE MONTH ON HTML
     const displayMonth = document.querySelector('.display-month');
 
+    //* CONTAINER FOR CALENDAR
     const calendarDiv = document.querySelector('.calendar');
 
     //* SET A DATE
@@ -46,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
 
         //? AFTER THE LOOP IT CLOSES THE /tr,/thead and
-        //? start using tbody and first row for displaying dates
+        //? start using tbody and tr, first row for displaying dates
         calendarHTML += '</tr></thead><tbody><tr>';
 
         //* Empty cells before the first day
@@ -55,28 +62,66 @@ document.addEventListener('DOMContentLoaded', function(){
             calendarHTML += '<td></td>';
         }
 
-        // Fill in the days
+        //* DISPLAY THE DAYS
+        /*
+        ? day=1 - start the day as 1.
+
+        ?day <=daysInMonth - make sure the day will not exceed
+        ? -> of the totalNUm of days in current month.
+
+        ? day++ just add the days until it reach the total NUm of days
+
+        */ 
         for (let day = 1; day <= daysInMonth; day++) {
+            //* CHECKS IF WE NEED TO START A NEW ROW ON TABLE
+            /*
+            ? (firstDay + day - 1): put a date number on calendar
+            ? (% 7 === 0): start of a new week every 7 cells
+            ? (day !== 1): prevents closing and opening a row before the first day
+            */ 
             if ((firstDay + day - 1) % 7 === 0 && day !== 1) {
+
+                //? </tr> = CLOSE THE ROW FOR THE EMPTY CELLS BEFORE THE 1ST DAY
                 calendarHTML += '</tr><tr>';
             }
-            calendarHTML += `<td>${day}</td>`;
+            let isToday = (day === todayDate && month === todayMonth && year === todayYear);
+            //? add the day number on table cell
+            calendarHTML += `<td ${isToday ? 'class="date-today"' : ''}>${day}</td>`;
         }
 
-        // Empty cells after the last day
+        //* Empty cells after the last day
+        //* CALCULATE WHICH DAY OF THE WEEK the last date of the month falls on
+        //? firstday: is the weekday index of the 1st day the 0=sunday 6=saturday
+        //? daysInMOnth: is the total number  of days in the month
+        //? if you add them: it gives the position after the last date: %7 make it to a weekday(0-6)
+        //! IN SUMMARRY: CHECKS IF THE LAST WEEK OF THE MONTH IS "INCOMPLETE"
+        //! IF THERE ARE INCOMPLETE:
+        //! calendarHTML += '<td></td>';
+        //! IT ADDS EMPTY EMPTY CELLS
         const lastDay = (firstDay + daysInMonth) % 7;
+
+        //? checks if the last day of the month is not saturday which means the row is not complt
         if (lastDay !== 0) {
+
+            //? ADD EMPTY CELLS TO FILL THE REST OF THE LAST ROW
             for (let i = lastDay; i < 7; i++) {
                 calendarHTML += '<td></td>';
             }
         }
 
+        //* close the table and its remaining open element
         calendarHTML += '</tr></tbody></table>';
+
+        //* used a return to let this calendarHTML used outide of theh function
         return calendarHTML;
     }
 
-    // Insert the calendar below the month name
+    //* Insert the calendar below the month name
     calendarDiv.innerHTML = `<h1 class="display-month">${months[mydate.getMonth()]}</h1>` +
+    
+    //* calling our function of displaying dates and give the year and month a value
     myCalendar(mydate.getFullYear(), mydate.getMonth());
     
 });
+
+
