@@ -1,6 +1,9 @@
+const mysession = Number(localStorage.getItem('sessioncount')) || 0;
+
 //* USES A DOMCONTENT LOADED TO PERFECTLY DISPLAY THE MONTH
 document.addEventListener('DOMContentLoaded', function(){
 
+    //* TO GET THE CURRENT DAY  BUT THIS IS FOR ADDING A STYLE ON THE CURRENT DAY
     const today = new Date();
     const todayDate = today.getDate();
     const todayMonth = today.getMonth();
@@ -84,9 +87,30 @@ document.addEventListener('DOMContentLoaded', function(){
                 //? </tr> = CLOSE THE ROW FOR THE EMPTY CELLS BEFORE THE 1ST DAY
                 calendarHTML += '</tr><tr>';
             }
+
+            //* COMPARING IF THE DATE DAY AND YEAR IS SAME AS THE today var on top
             let isToday = (day === todayDate && month === todayMonth && year === todayYear);
-            //? add the day number on table cell
-            calendarHTML += `<td ${isToday ? 'class="date-today"' : ''}>${day}</td>`;
+            let tdClass = '';
+
+            if(isToday){
+                if(mysession >= 4){
+                    tdClass = 'date-today-high';
+                }else if (mysession >= 2){
+                    tdClass = 'date-today-mid';
+                }else if (mysession >= 1){
+                    tdClass = 'date-today-low';
+                }else{
+                    tdClass = 'date-today';
+                }
+            }
+            /*
+            ? add the day number on table cell
+            
+            ? If isToday is true (meaning the cell represents today’s date),
+            ? the code adds class="date-today" to the <td> element; otherwise, 
+            ? it leaves the <td> without any extra class.
+            */
+            calendarHTML += `<td${tdClass ? ` class="${tdClass}"` : ''}>${day}</td>`;
         }
 
         //* Empty cells after the last day
@@ -116,12 +140,20 @@ document.addEventListener('DOMContentLoaded', function(){
         return calendarHTML;
     }
 
-    //* Insert the calendar below the month name
+    //* Insert the calendar below the month nam 
     calendarDiv.innerHTML = `<h1 class="display-month">${months[mydate.getMonth()]}</h1>` +
     
     //* calling our function of displaying dates and give the year and month a value
     myCalendar(mydate.getFullYear(), mydate.getMonth());
     
 });
+
+localStorage.setItem('sessioncount', sessioncount);
+// Now update the calendar:
+if (typeof myCalendar === 'function') {
+    document.querySelector('.calendar').innerHTML =
+        `<h1 class="display-month">${months[new Date().getMonth()]}</h1>` +
+        myCalendar(new Date().getFullYear(), new Date().getMonth());
+}
 
 
