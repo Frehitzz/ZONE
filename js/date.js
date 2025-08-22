@@ -29,6 +29,20 @@ document.addEventListener('DOMContentLoaded', function(){
     //* STORE THE MYDATE.GETMONTH ON THE ARRAY OF MONTHS ON 1 YEAR
     displayMonth.textContent = months[mydate.getMonth()];
 
+    function getSessionClass(session) {
+        if(session >= 6){
+            return 'date-today-veryhigh';
+        }else if (session >= 4){
+            return 'date-today-high';
+        }else if (session >= 2){
+            return 'date-today-mid';
+        }else if (session >= 1){
+            return 'date-today-low';
+        }else{
+            return 'date-today';
+        }
+    }
+
     function myCalendar(year, month){
         //* GET THE DAY OF THE WEEK FOR THE 1ST OF THE MONTH
         //* O-SNUDAY, 6-SATURDAY
@@ -91,17 +105,11 @@ document.addEventListener('DOMContentLoaded', function(){
             //* COMPARING IF THE DATE DAY AND YEAR IS SAME AS THE today var on top
             let isToday = (day === todayDate && month === todayMonth && year === todayYear);
             let tdClass = '';
+            let tdId = '';
 
             if(isToday){
-                if(mysession >= 4){
-                    tdClass = 'date-today-high';
-                }else if (mysession >= 2){
-                    tdClass = 'date-today-mid';
-                }else if (mysession >= 1){
-                    tdClass = 'date-today-low';
-                }else{
-                    tdClass = 'date-today';
-                }
+                tdClass = getSessionClass(mysession);
+                tdId = ' id="today-cell"';
             }
             /*
             ? add the day number on table cell
@@ -110,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function(){
             ? the code adds class="date-today" to the <td> element; otherwise, 
             ? it leaves the <td> without any extra class.
             */
-            calendarHTML += `<td${tdClass ? ` class="${tdClass}"` : ''}>${day}</td>`;
+            calendarHTML += `<td${tdClass ? ` class="${tdClass}"` : ''}${tdId}>${day}</td>`;
         }
 
         //* Empty cells after the last day
@@ -142,18 +150,39 @@ document.addEventListener('DOMContentLoaded', function(){
 
     //* Insert the calendar below the month nam 
     calendarDiv.innerHTML = `<h1 class="display-month">${months[mydate.getMonth()]}</h1>` +
-    
-    //* calling our function of displaying dates and give the year and month a value
-    myCalendar(mydate.getFullYear(), mydate.getMonth());
-    
-});
+        myCalendar(mydate.getFullYear(), mydate.getMonth());
 
-localStorage.setItem('sessioncount', sessioncount);
-// Now update the calendar:
-if (typeof myCalendar === 'function') {
-    document.querySelector('.calendar').innerHTML =
-        `<h1 class="display-month">${months[new Date().getMonth()]}</h1>` +
-        myCalendar(new Date().getFullYear(), new Date().getMonth());
-}
+    // Function to update today's cell class when sessioncount changes
+    function updateTodayCellClass() {
+        const session = Number(localStorage.getItem('sessioncount')) || 0;
+        const todayCell = document.getElementById('today-cell');
+        if (todayCell) {
+            todayCell.className = getSessionClass(session);
+        }
+    }
+
+    // Listen for storage changes (from other tabs/windows)
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'sessioncount') {
+            updateTodayCellClass();
+        }
+    });
+
+    // Override localStorage.setItem to dispatch a custom event for sessioncount changes
+    const originalSetItem = localStorage.setItem;
+    localStorage.setItem = function(key, value) {
+        originalSetItem.apply(this, arguments);
+        if (key === 'sessioncount') {
+            window.dispatchEvent(new Event('sessioncount-changed'));
+        }
+    };
+
+    // Listen for custom event in this tab
+    window.addEventListener('sessioncount-changed', updateTodayCellClass);
+
+    // Optionally, if sessioncount can change in this tab, observe it and update
+    // You can call updateTodayCellClass() after changing sessioncount elsewhere in your code
+
+});
 
 
