@@ -1,8 +1,42 @@
 /* Add to your CSS file */
 .calendar {
     margin: 0;
+    padding: 10px;
     /* padding: 10px; */
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Roboto", sans-serif;
+
+}
+
+.session-counter{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(230, 230, 230, 0.473);
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.session-counter h1{
+    font-size: 15px;
+    color:rgb(92, 92, 92);
+}
+
+.session-counter p{
+    font-size: 20px;
+    padding: 10px;
+    margin: 0;
+}
+
+
+.display-month{
+    margin: 10px;
+    color: rgb(106, 134, 255);
 }
 
 .calendar-table {
@@ -13,23 +47,25 @@
     table-layout: fixed; /* Ensures columns fit evenly */
 }
 
-.calendar-table th{
-    border: 1px solid #ccc;
-    text-align: center;
-    padding: 6px;
-    width: 1%; /* Let table-layout: fixed handle the sizing */
-    box-sizing: border-box;
-    word-break: break-all;
+.calendar-table {
+    width: 240px; /* 7 columns x 34px each + padding/margins */
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 0.95rem;
+    table-layout: fixed;
 }
 
-.calendar-table td{
+.calendar-table th,
+.calendar-table td {
     text-align: center;
-    padding: 6px;
-    width: 30px;
-    height: 30px;
+    padding: 4px;
+    width: 34px;
+    height: 34px;
     box-sizing: border-box;
     word-break: break-all;
+    
 }
+
 
 .calendar-table td > div {
     width: 30px;
@@ -41,12 +77,10 @@
     margin: 0 auto;
 }
 
-.calendar-table th {
-    background: #f0f0f0;
-}
+
 
 /* CHANING BG COLOR DEPENDS ON SESSION */
-.date-today      > div { color: black; border: 1px solid #67faff; } /* 0 sessions */
+.date-today      > div { color: rgb(104, 104, 104); border: 1px solid #67faff; } /* 0 sessions */
 .date-today-1    > div { background: #23d3ff20; color: #222; border: 1px solid #67faff; } /* 1 */
 .date-today-2    > div { background: #23d3ff40; color: #222; border: 1px solid #67faff; } /* 2 */
 .date-today-3    > div { background: #23d3ff60; color: #222; border: 1px solid #67faff; } /* 3 */
@@ -56,3 +90,12 @@
 .date-today-7    > div { background: #23d3ffe0; color: #222; border: 1px solid #67faff; } /* 7 */
 .date-today-8    > div { background: #01eeff;   color: #222; border: 1px solid #67faff; } /* 8+ */
 
+@media (max-width: 480px) {
+    .calendar-table th{
+        border-radius: 10%;
+    }
+
+    .calendar{
+        height: 60%;
+    }
+}
