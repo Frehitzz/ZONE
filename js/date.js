@@ -91,13 +91,13 @@ document.addEventListener('DOMContentLoaded', function(){
         let calendarHTML = '<table class="calendar-table"><thead><tr>';
 
         //* daysOfWeek is an array and have a value of every days of week
-        const daysOfWeek = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+        const daysOfWeek = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
         //* PUT EACH DAYS OF WEEK ON <TH> 
         //? WHY WE USE 'LET DAY OF DAYSOFWEEK'
         //? DAY = A SINGE VALUE FROM THAT ARRAY(daysOfWeek) EACH TIME THE LOOP RUNS
         for (let day of daysOfWeek) {
-            calendarHTML += `<th>${day}</th>`;
+            calendarHTML += `<th><span class="dayspan">${day}<span></th>`;
         }
 
         //? AFTER THE LOOP IT CLOSES THE /tr,/thead and
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
 
         //* close the table and its remaining open element
-        calendarHTML += '</tr></tbody></table>';
+        calendarHTML += '</tr></tbody></table><div class="session-counter"><h1>Today</h1><p><span class="sesh"></span> sessions</p></div>';
 
         //* used a return to let this calendarHTML used outide of theh function
         return calendarHTML;
@@ -224,6 +224,9 @@ document.addEventListener('DOMContentLoaded', function(){
                 div.style.background = bgColor;
             }
         }
+
+        const sesh = document.querySelector('.sesh');
+        sesh.textContent = sessioncount;
     }
 
     // After rendering, apply background color for all cells based on localStorage
@@ -299,6 +302,8 @@ document.addEventListener('DOMContentLoaded', function(){
     updateTodayCellClass();
     applyBgColorsToCalendar();
 
+    
+    
 });
 
 
