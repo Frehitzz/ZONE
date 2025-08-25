@@ -210,6 +210,11 @@ function startbutt(){
         const playIcon = document.querySelector('.start-butt i');
         playIcon.style.transition = 'all 0.3s ease-in-out';
         playIcon.className = 'fa-solid fa-play';
+
+        // GET CURRENT MODE TO DETERMINE THE PAUSE ICON COLOR
+        const isDarkmode = document.body.classList.contains('darkmode');
+        playIcon.style.color = isDarkmode ? 'rgba(255, 255, 255, 0.62)' : 'rgb(255, 255, 255)'; 
+
         return; // STOP THE FUNCTION
     }
     
