@@ -11,6 +11,14 @@ body{
  background-blend-mode: screen;
 }
 
+body.darkmode{
+    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+}
+
+body.lightmode{
+    background: linear-gradient(-180deg, #BCC5CE 0%, #929EAD 98%), radial-gradient(at top left, rgba(255,255,255,0.30) 0%, rgba(0,0,0,0.30) 100%);
+}
+
 nav{
     display: flex;
     justify-content: space-between;
@@ -19,12 +27,20 @@ nav{
 }
 
 .title{
-    padding-left: 10px;
+    padding: 5px 20px;
+    margin: 5px;
+    margin-left: 10px;
+    font-family: "Roboto", sans-serif;
+    color: black;
 }
 
-.settings{
-    padding-right: 10px;
+.title-letter{
+    color: rgb(101, 130, 255);
+    font-size: 30px;
+    font-weight: 900;
+
 }
+
 
 .layout{
     display: flex;
@@ -116,8 +132,7 @@ nav{
     color: rgb(255, 255, 255);
     background-color: none;
     text-shadow: 0 0 20px rgba(102, 126, 234, 0.63);
-    transition: transform 0.2s ease;
-    transition: color 0.1s ease-out;
+    transition: 0.3s;
 
 }
 
@@ -208,5 +223,18 @@ nav{
 	}
 	.bottom-timer{ margin-top: 32px; }
 	
-	/* Hide calendar completely on phones */
+}
+
+
+/** DARK MODE LIGHT MODE */
+.toggle-mode{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-right: 20px;
+}
+
+.fa-sun, .fa-moon{
+    font-size: 20px;
+    color: black;
 }
