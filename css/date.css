@@ -8,6 +8,7 @@
     flex-direction: column;
     align-items: center;
     font-family: "Roboto", sans-serif;
+    background-color: rgba(106, 133, 255, 0.603);
 
 }
 
@@ -17,7 +18,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgba(230, 230, 230, 0.473);
+    background-color: white;
     border-radius: 10px;
     margin-top: 10px;
 }
@@ -36,7 +37,7 @@
 
 .display-month{
     margin: 10px;
-    color: rgb(106, 134, 255);
+    color: white;
 }
 
 .calendar-table {
@@ -66,6 +67,10 @@
     
 }
 
+.calendar-table th{ 
+    color: white;
+}
+
 
 .calendar-table td > div {
     width: 30px;
@@ -80,7 +85,7 @@
 
 
 /* CHANING BG COLOR DEPENDS ON SESSION */
-.date-today      > div { color: rgb(104, 104, 104); border: 1px solid #67faff; } /* 0 sessions */
+.date-today      > div { color: rgba(255, 255, 255, 0.438); border: 1px solid #67faff; } /* 0 sessions */
 .date-today-1    > div { background: #23d3ff20; color: #222; border: 1px solid #67faff; } /* 1 */
 .date-today-2    > div { background: #23d3ff40; color: #222; border: 1px solid #67faff; } /* 2 */
 .date-today-3    > div { background: #23d3ff60; color: #222; border: 1px solid #67faff; } /* 3 */
