@@ -193,20 +193,30 @@ document.addEventListener('DOMContentLoaded', function(){
         return `${y}-${m}-${d}`;
     }
 
-    // On load, check if sessioncount is for today, else reset only the global sessioncount
+    // On load, check if sessioncount is for today, else save previous day and reset for new day
     const todayKey = getDateKey(today);
     const lastSessionDate = localStorage.getItem('last-session-date');
+    
     if (lastSessionDate !== todayKey) {
-        // Before resetting, save yesterday's sessioncount to its date key
+        // Before resetting, save previous day's sessioncount to its date key
         if (lastSessionDate) {
             const prevSession = Number(localStorage.getItem('sessioncount')) || 0;
-            localStorage.setItem('session-' + lastSessionDate, prevSession);
-            localStorage.setItem('bgcolor-' + lastSessionDate, getSessionBgColor(prevSession));
+            
+            // Only save if there were sessions (prevents overwriting historical data with zeros)
+            if (prevSession > 0) {
+                localStorage.setItem('session-' + lastSessionDate, prevSession);
+                localStorage.setItem('bgcolor-' + lastSessionDate, getSessionBgColor(prevSession));
+            }
         }
+
         // New day: reset sessioncount for today
         localStorage.setItem('sessioncount', 0);
         localStorage.setItem('last-session-date', todayKey);
+
+        // Apply colors so previous days' cells update immediately
+        applyBgColorsToCalendar();
     }
+
 
     // Function to update today's cell class and save session/bgcolor for today
     function updateTodayCellClass() {
@@ -216,8 +226,11 @@ document.addEventListener('DOMContentLoaded', function(){
             todayCell.className = getSessionClass(session);
             // Store the session/bgcolor for today (per-date)
             const bgColor = getSessionBgColor(session);
+            
+            // Always save today's session count to its specific date key
             localStorage.setItem('session-' + todayKey, session);
             localStorage.setItem('bgcolor-' + todayKey, bgColor);
+            
             // Apply the background color directly (for immediate effect)
             const div = todayCell.querySelector('div');
             if (div) {
@@ -226,30 +239,38 @@ document.addEventListener('DOMContentLoaded', function(){
         }
 
         const sesh = document.querySelector('.sesh');
-        sesh.textContent = sessioncount;
+        sesh.textContent = session;
     }
 
     // After rendering, apply background color for all cells based on localStorage
     function applyBgColorsToCalendar() {
         const table = document.querySelector('.calendar-table');
         if (!table) return;
+        
         // Loop through all days in this month
         const year = mydate.getFullYear();
         const month = mydate.getMonth();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
+        
         for (let day = 1; day <= daysInMonth; day++) {
             const cellDate = new Date(year, month, day);
             const cellKey = getDateKey(cellDate);
-            const bgColor = localStorage.getItem('bgcolor-' + cellKey);
-            // Find the cell for this day (skip today, already handled)
+            
+            // Check for stored session count first (more reliable than just bgcolor)
+            let session = Number(localStorage.getItem('session-' + cellKey)) || 0;
+            let bgColor = session > 0 ? getSessionBgColor(session) : localStorage.getItem('bgcolor-' + cellKey);
+            
+            // Skip today as it's handled separately
             if (!(day === todayDate && month === todayMonth && year === todayYear)) {
                 // Find the cell by text content
                 const tdList = table.querySelectorAll('td');
                 tdList.forEach(td => {
                     if (td.textContent.trim() == day) {
                         const div = td.querySelector('div');
-                        if (div && bgColor) {
-                            div.style.background = bgColor;
+                        if (div && (bgColor || session > 0)) {
+                            div.style.background = bgColor || getSessionBgColor(session);
+                            // Also update the class for proper styling
+                            td.className = getSessionClass(session);
                         }
                     }
                 });
@@ -257,14 +278,27 @@ document.addEventListener('DOMContentLoaded', function(){
         }
     }
 
-    // Function to reset session count for a new day
+    // Function to reset session count for a new day - improved to preserve history
     function resetSessionCountIfNewDay() {
         const todayKey = getDateKey(new Date());
         const lastSessionDate = localStorage.getItem('last-session-date');
+        
         if (lastSessionDate !== todayKey) {
+            // Save the previous day's session count before resetting
+            const prevSession = Number(localStorage.getItem('sessioncount')) || 0;
+            
+            // Only save if there were sessions
+            if (prevSession > 0 && lastSessionDate) {
+                localStorage.setItem('session-' + lastSessionDate, prevSession);
+                localStorage.setItem('bgcolor-' + lastSessionDate, getSessionBgColor(prevSession));
+            }
+            
             // New day: reset sessioncount for today
             localStorage.setItem('sessioncount', 0);
             localStorage.setItem('last-session-date', todayKey);
+            
+            // Update the calendar display
+            applyBgColorsToCalendar();
         }
     }
 
@@ -280,11 +314,19 @@ document.addEventListener('DOMContentLoaded', function(){
     const originalSetItem = localStorage.setItem;
     localStorage.setItem = function(key, value) {
         originalSetItem.apply(this, arguments);
+        
         if (key === 'sessioncount') {
-            // Also update the per-date session key for today
+            // Get today's date key
             const todayKey = getDateKey(new Date());
+            
+            // Also update the per-date session key for today
             originalSetItem.call(this, 'session-' + todayKey, value);
             originalSetItem.call(this, 'bgcolor-' + todayKey, getSessionBgColor(Number(value)));
+            
+            // Check if we need to reset for a new day
+            resetSessionCountIfNewDay();
+            
+            // Dispatch event to update UI
             window.dispatchEvent(new Event('sessioncount-changed'));
         }
     };
@@ -302,8 +344,13 @@ document.addEventListener('DOMContentLoaded', function(){
     updateTodayCellClass();
     applyBgColorsToCalendar();
 
+    // Check for new day on page load and periodically
+    resetSessionCountIfNewDay();
     
-    
+    // Check for day change every minute (for when page stays open overnight)
+    setInterval(resetSessionCountIfNewDay, 60000);
 });
+
+
 
 
