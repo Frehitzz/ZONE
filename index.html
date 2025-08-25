@@ -54,9 +54,20 @@
         </div>
     </div>
     <nav>
-        <h1 class="title">Zone</h1>
+        <h1 class="title"><span class="title-letter">Z</span>one</h1>
         <button onclick="localStorage.setItem('sessioncount', 0); location.reload();">Reset Session Count</button>
-        <h3 class="settings"><a href="#">Settings</a></h3>
+        <div class="toggle-mode">
+            <i class="fa-solid fa-sun" id="sun"></i>
+            <div class="switch">
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" />
+                    <div class="slider round"></div>
+                </label>
+            </div>
+            <i class="fa-regular fa-moon" id="moon"></i>
+                
+        </div>
+        
     </nav>
 
     <div class="layout">
@@ -93,12 +104,12 @@
             <div class="time-display">
                 <div class="time-segment">
                     <div class="time-value" id="minutes">25</div>
-                    <div class="time-label">Minutes</div>
+                    <div class="time-label" id="minuteLabel">Minutes</div>
                 </div>
                 <div class="colon">:</div>
                 <div class="time-segment">
                     <div class="time-value" id="seconds">00</div>
-                    <div class="time-label">Seconds</div>
+                    <div class="time-label" id="secondLabel">Seconds</div>
                 </div>
             </div>
             </div>
@@ -137,11 +148,11 @@
 
         </div>
         <div class="calendar">
-            <h1 class="display-month"></h1>
-            
+            <h1 class="display-month"></h1>  
         </div>
     </div>
 
+    <script src="js/togglemode.js"></script>
     <script src="js/timer.js"></script>
     <script src="js/todo.js"></script>
     <script src="js/date.js"></script>
