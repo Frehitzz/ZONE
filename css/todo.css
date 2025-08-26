@@ -20,13 +20,6 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    background-color: #605bbe;
-    border-top-left-radius: 16px;   /* Match .todo-container */
-    border-top-right-radius: 16px;  /* Match .todo-container */
-    border-bottom-left-radius: 0;   /* Straight bottom */
-    border-bottom-right-radius: 0;
-    border-bottom: 1px solid white;
-    border-top: 1px solid white;
     font-family: "Roboto", sans-serif;
     color: white;
 }
