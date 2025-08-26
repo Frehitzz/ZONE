@@ -90,9 +90,16 @@ function renderTodos(){
     // ${item.note ? `<div class='notes-container2'>${item.note}</div>` : ""}
     // If there’s a note, show it. If not, don’t show anything.
 
-    });      
+    });
+    
     // After rendering, save to storage in case of reordering or other changes
     saveTodosToStorage();
+
+    if(document.body.classList.contains('darkmode')) {
+        darkmode();
+    } else {
+        lightmode();
+    }
 }
 
 function renderCompletedTask(){
