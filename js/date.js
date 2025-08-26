@@ -2,14 +2,6 @@ const mysession = Number(localStorage.getItem('sessioncount')) || 0;
 
 //* USES A DOMCONTENT LOADED TO PERFECTLY DISPLAY THE MONTH
 document.addEventListener('DOMContentLoaded', function(){
-
-    //* TO GET THE CURRENT DAY  BUT THIS IS FOR ADDING A STYLE ON THE CURRENT DAY
-    const today = new Date();
-    const todayDate = today.getDate();
-    const todayMonth = today.getMonth();
-    const todayYear =today.getFullYear();
-
-
     //* THE CLASS WHERE WE STORE THE MONTH ON HTML
     const displayMonth = document.querySelector('.display-month');
 
@@ -142,8 +134,14 @@ document.addEventListener('DOMContentLoaded', function(){
             let tdClass = '';
             let tdId = '';
 
+            // Get current date for comparison
+            const currentDate = new Date();
+            const currentDay = currentDate.getDate();
+            const currentMonth = currentDate.getMonth();
+            const currentYear = currentDate.getFullYear();
+
             // If this is today, use current sessioncount
-            let isToday = (day === todayDate && month === todayMonth && year === todayYear);
+            let isToday = (day === currentDay && month === currentMonth && year === currentYear);
             if (isToday) {
                 session = Number(localStorage.getItem('sessioncount')) || 0;
                 tdId = ' id="today-cell"';
@@ -192,9 +190,14 @@ document.addEventListener('DOMContentLoaded', function(){
         const d = String(dateObj.getDate()).padStart(2, '0');
         return `${y}-${m}-${d}`;
     }
+    
+    // Get the current date key (fixed to always be the actual current date)
+    function getCurrentDateKey() {
+        return getDateKey(new Date());
+    }
 
     // On load, check if sessioncount is for today, else save previous day and reset for new day
-    const todayKey = getDateKey(today);
+    const todayKey = getCurrentDateKey();
     const lastSessionDate = localStorage.getItem('last-session-date');
     
     if (lastSessionDate !== todayKey) {
@@ -217,24 +220,50 @@ document.addEventListener('DOMContentLoaded', function(){
         applyBgColorsToCalendar();
     }
 
-
     // Function to update today's cell class and save session/bgcolor for today
     function updateTodayCellClass() {
+        // Always get the current date for today's cell
+        const currentDate = new Date();
+        const todayDate = currentDate.getDate();
+        const todayMonth = currentDate.getMonth();
+        const todayYear = currentDate.getFullYear();
+        const todayKey = getCurrentDateKey();
+        
         const session = Number(localStorage.getItem('sessioncount')) || 0;
-        const todayCell = document.getElementById('today-cell');
-        if (todayCell) {
-            todayCell.className = getSessionClass(session);
-            // Store the session/bgcolor for today (per-date)
-            const bgColor = getSessionBgColor(session);
+        
+        // Update today's cell if it exists in the current month view
+        const isTodayInView = (todayMonth === mydate.getMonth() && todayYear === mydate.getFullYear());
+        
+        if (isTodayInView) {
+            // Find today's cell - may need to search if ID not present
+            let todayCell = document.getElementById('today-cell');
             
-            // Always save today's session count to its specific date key
-            localStorage.setItem('session-' + todayKey, session);
-            localStorage.setItem('bgcolor-' + todayKey, bgColor);
+            // If not found by ID, try to find by date number
+            if (!todayCell) {
+                const cells = document.querySelectorAll('.calendar-table td');
+                cells.forEach(cell => {
+                    if (cell.textContent.trim() == todayDate) {
+                        // This is today's cell
+                        cell.id = 'today-cell';
+                        todayCell = cell;
+                    }
+                });
+            }
             
-            // Apply the background color directly (for immediate effect)
-            const div = todayCell.querySelector('div');
-            if (div) {
-                div.style.background = bgColor;
+            if (todayCell) {
+                todayCell.className = getSessionClass(session);
+                // Store the session/bgcolor for today (per-date)
+                const bgColor = getSessionBgColor(session);
+                
+                // Always save today's session count to its specific date key
+                localStorage.setItem('session-' + todayKey, session);
+                localStorage.setItem('bgcolor-' + todayKey, bgColor);
+                
+                // Apply the background color directly (for immediate effect)
+                const div = todayCell.querySelector('div');
+                if (div) {
+                    div.style.background = bgColor;
+                }
             }
         }
 
@@ -246,6 +275,12 @@ document.addEventListener('DOMContentLoaded', function(){
     function applyBgColorsToCalendar() {
         const table = document.querySelector('.calendar-table');
         if (!table) return;
+        
+        // Get current date for identifying today
+        const currentDate = new Date();
+        const todayDate = currentDate.getDate();
+        const todayMonth = currentDate.getMonth();
+        const todayYear = currentDate.getFullYear();
         
         // Loop through all days in this month
         const year = mydate.getFullYear();
@@ -261,7 +296,8 @@ document.addEventListener('DOMContentLoaded', function(){
             let bgColor = session > 0 ? getSessionBgColor(session) : localStorage.getItem('bgcolor-' + cellKey);
             
             // Skip today as it's handled separately
-            if (!(day === todayDate && month === todayMonth && year === todayYear)) {
+            const isToday = (day === todayDate && month === todayMonth && year === todayYear);
+            if (!isToday) {
                 // Find the cell by text content
                 const tdList = table.querySelectorAll('td');
                 tdList.forEach(td => {
@@ -274,13 +310,21 @@ document.addEventListener('DOMContentLoaded', function(){
                         }
                     }
                 });
+            } else {
+                // Mark today's cell with ID
+                const tdList = table.querySelectorAll('td');
+                tdList.forEach(td => {
+                    if (td.textContent.trim() == day) {
+                        td.id = 'today-cell';
+                    }
+                });
             }
         }
     }
 
     // Function to reset session count for a new day - improved to preserve history
     function resetSessionCountIfNewDay() {
-        const todayKey = getDateKey(new Date());
+        const todayKey = getCurrentDateKey(); // Always get the current date
         const lastSessionDate = localStorage.getItem('last-session-date');
         
         if (lastSessionDate !== todayKey) {
@@ -297,8 +341,14 @@ document.addEventListener('DOMContentLoaded', function(){
             localStorage.setItem('sessioncount', 0);
             localStorage.setItem('last-session-date', todayKey);
             
-            // Update the calendar display
-            applyBgColorsToCalendar();
+            // If we're showing the current month, update the calendar display
+            if (mydate.getMonth() === new Date().getMonth() && 
+                mydate.getFullYear() === new Date().getFullYear()) {
+                applyBgColorsToCalendar();
+            }
+            
+            // Update the session counter display
+            updateTodayCellClass();
         }
     }
 
@@ -316,8 +366,8 @@ document.addEventListener('DOMContentLoaded', function(){
         originalSetItem.apply(this, arguments);
         
         if (key === 'sessioncount') {
-            // Get today's date key
-            const todayKey = getDateKey(new Date());
+            // Always get the current date key
+            const todayKey = getCurrentDateKey();
             
             // Also update the per-date session key for today
             originalSetItem.call(this, 'session-' + todayKey, value);
@@ -336,9 +386,6 @@ document.addEventListener('DOMContentLoaded', function(){
         updateTodayCellClass();
         applyBgColorsToCalendar();
     });
-
-    // Optionally, if sessioncount can change in this tab, observe it and update
-    // You can call updateTodayCellClass() after changing sessioncount elsewhere in your code
 
     // On first load, update today's cell class and save today's session/bgcolor
     updateTodayCellClass();
