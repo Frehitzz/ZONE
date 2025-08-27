@@ -178,6 +178,20 @@ document.addEventListener('DOMContentLoaded', function(){
 
         //* close the table and its remaining open element
         calendarHTML += '</tr></tbody></table><div class="session-counter"><h1>Today</h1><p><span class="sesh"></span> sessions</p></div>';
+        calendarHTML +=`
+            <div class="bottom-calendar">
+                <p>Less</p>
+                <div class="bgcolor">
+                    <span class="span1"></span>
+                    <span class="span2"></span>
+                    <span class="span3"></span>
+                    <span class="span4"></span>
+                    <span class="span5"></span>
+                </div>
+                <p>More</p>
+            </div>
+    
+        `
 
         //* used a return to let this calendarHTML used outide of theh function
         return calendarHTML;
