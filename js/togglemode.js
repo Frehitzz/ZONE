@@ -11,7 +11,7 @@ const timerMinutes = document.getElementById('minutes');
 const timerSeconds = document.getElementById('seconds');
 const minLabel = document.getElementById('minuteLabel');
 const secLabel = document.getElementById('secondLabel');
-const progressbar = document.querySelector('.main-timer');
+const progressbarElem = document.querySelector('.main-timer');
 const timeDisplay = document.querySelector('.time-display');
 
 // TIMER MODES
@@ -74,8 +74,8 @@ function darkmode() {
     minLabel.style.color = 'black';
     secLabel.style.color = 'black';
 
-    progressbar.style.border = '1px solid rgba(255, 255, 255, 0.1)';
-    progressbar.style.backgroundColor =  'black';
+    progressbarElem.style.border = '1px solid rgba(255, 255, 255, 0.1)';
+    progressbarElem.style.backgroundColor =  'black';
 
     timeDisplay.style.backgroundColor = 'black';
     timeDisplay.style.border = '2px solid rgb(106, 134, 255)';
@@ -153,8 +153,8 @@ function lightmode() {
     minLabel.style.color = '';
     secLabel.style.color = '';
 
-    progressbar.style.border = '';
-    progressbar.style.backgroundColor =  '';
+    progressbarElem.style.border = '';
+    progressbarElem.style.backgroundColor =  '';
     timeDisplay.style.backgroundColor = '';
     timeDisplay.style.border = '';
 
