@@ -90,13 +90,13 @@
 .date-today      > div { color: white;} /* 0 sessions */
 .date-today-1    > div { background: #23d3ff20; color: white; border: 1px solid #67faff; } /* 1 */
 .date-today-2    > div { background: #23d3ff40; color: white; border: 1px solid #67faff; } /* 2 */
-.date-today-3    > div { background: #23d3ff60; color: white; border: 1px solid #67faff; } /* 3 */
-.date-today-4    > div { background: #23d3ff80; color: white; border: 1px solid #67faff; } /* 4 */
-.date-today-5    > div { background: #23d3ffa0; color: white; border: 1px solid #67faff; } /* 5 */
-.date-today-6    > div { background: #23d3ffc0; color: white; border: 1px solid #67faff; } /* 6 */
-.date-today-7    > div { background: #23d3ffe0; color: white; border: 1px solid #67faff; } /* 7 */
-.date-today-8    > div { background: #23d3ff;   color: white; border: 1px solid #67faff; } /* 8+ */
-
+.date-today-3    > div { background: rgba(22, 83, 124, 0.76); color: white; border: 1px solid #67faff; } /* 3 */
+.date-today-4    > div { background: rgb(22, 83, 124); color: white; border: 1px solid #67faff; } /* 4 */
+.date-today-5    > div { background: rgba(35, 211, 255, 0.342); color: white; border: 1px solid #67faff; } /* 5 */
+.date-today-6    > div { background: rgba(35, 211, 255, 0.582); color: white; border: 1px solid #67faff; } /* 6 */
+.date-today-7    > div { background: #33e0ecc7; color: white; border: 1px solid #67faff; } /* 7 */
+.date-today-8    > div { background: #33e0ec;   color: white; border: 1px solid #67faff; } /* 8+ */
+    
 /* Tooltip styling */
 /* .calendar-table td[title] {
     cursor: pointer;
