@@ -542,11 +542,12 @@ textarea{
 	.completed-title{
 		padding: 8px;
 	}
-	.task-completed{
-		max-height: 22vh;
-		overflow-y: auto;
-		padding: 8px 10px;
-	}
+  .task-completed{
+    max-height: 22vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 8px 10px;
+  }
 }
 
 /* Phone-specific adjustments */
@@ -605,13 +606,10 @@ textarea{
     overflow: hidden;
 	}
 
-  .added-task{
+  .added-task, .complete-task{
     max-width: 95%;
+    padding: 10px;
   }
-
-	.added-task, .complete-task{
-		padding: 10px;
-	}
 	.usertask-container, .complete-task-container{
 		font-size: 16px;
 	}
