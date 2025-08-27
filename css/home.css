@@ -59,7 +59,7 @@ nav{
 
 .calendar{
     width: 100%;
-    height: 80vh;
+    height: 77vh;
     max-width: 20%;
     border: 1px solid white;
     border-radius: 20px;
@@ -69,7 +69,7 @@ nav{
     width: 100%;
     height: 70%;
     max-width: 40%;
-    border: 1px solid rgba(255, 255, 255, 0.753);
+    border: 1px solid white;
     border-radius: 54px;
     padding: 20px;
 }
