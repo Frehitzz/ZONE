@@ -54,6 +54,7 @@
     margin-top: 10px;
     font-size: 0.95rem;
     table-layout: fixed;
+    cursor: pointer;
 }
 
 .calendar-table th,
@@ -73,27 +74,49 @@
 
 
 .calendar-table td > div {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto;
+    padding: 4px;
 }
 
 
 
 /* CHANING BG COLOR DEPENDS ON SESSION */
-.date-today      > div { color: rgba(255, 255, 255, 0.438); border: 1px solid #67faff; } /* 0 sessions */
-.date-today-1    > div { background: #23d3ff20; color: #222; border: 1px solid #67faff; } /* 1 */
-.date-today-2    > div { background: #23d3ff40; color: #222; border: 1px solid #67faff; } /* 2 */
-.date-today-3    > div { background: #23d3ff60; color: #222; border: 1px solid #67faff; } /* 3 */
-.date-today-4    > div { background: #23d3ff80; color: #222; border: 1px solid #67faff; } /* 4 */
-.date-today-5    > div { background: #23d3ffa0; color: #222; border: 1px solid #67faff; } /* 5 */
-.date-today-6    > div { background: #23d3ffc0; color: #222; border: 1px solid #67faff; } /* 6 */
-.date-today-7    > div { background: #23d3ffe0; color: #222; border: 1px solid #67faff; } /* 7 */
-.date-today-8    > div { background: #01eeff;   color: #222; border: 1px solid #67faff; } /* 8+ */
+.date-today      > div { color: white;} /* 0 sessions */
+.date-today-1    > div { background: #23d3ff20; color: white; border: 1px solid #67faff; } /* 1 */
+.date-today-2    > div { background: #23d3ff40; color: white; border: 1px solid #67faff; } /* 2 */
+.date-today-3    > div { background: #23d3ff60; color: white; border: 1px solid #67faff; } /* 3 */
+.date-today-4    > div { background: #23d3ff80; color: white; border: 1px solid #67faff; } /* 4 */
+.date-today-5    > div { background: #23d3ffa0; color: white; border: 1px solid #67faff; } /* 5 */
+.date-today-6    > div { background: #23d3ffc0; color: white; border: 1px solid #67faff; } /* 6 */
+.date-today-7    > div { background: #23d3ffe0; color: white; border: 1px solid #67faff; } /* 7 */
+.date-today-8    > div { background: #23d3ff;   color: white; border: 1px solid #67faff; } /* 8+ */
+
+/* Tooltip styling */
+/* .calendar-table td[title] {
+    cursor: pointer;
+    position: relative;
+}
+
+.calendar-table td[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 1000;
+} */
 
 @media (max-width: 480px) {
     .calendar-table th{
