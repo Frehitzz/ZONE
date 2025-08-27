@@ -115,10 +115,13 @@ function darkmode() {
     calendarContainer.style.backgroundColor = 'transparent';
     calendarContainer.style.border = '2px solid rgba(255, 255, 255, 0.1)';
     
+    // Update session counter styles - More specific selectors
     const sessionCount = document.querySelector('.session-counter');
-    if (sessionCount) sessionCount.style.backgroundColor = 'transparent';
-    if (sessionCount) sessionCount.style.border = '2px solid rgba(255, 255, 255, 0.1)';
-    if (sessionCount) sessionCount.style.color = 'white';
+    if (sessionCount) {
+        sessionCount.style.setProperty('background-color', 'transparent', 'important');
+        sessionCount.style.setProperty('border', '2px solid rgba(255, 255, 255, 0.1)', 'important');
+        sessionCount.style.setProperty('color', 'white', 'important');
+    }
 
     const todayh1 = document.querySelector('.session-counter h1');
     if (todayh1) todayh1.style.color = 'lightgray';
@@ -154,7 +157,7 @@ function lightmode() {
     secLabel.style.color = '';
 
     progressbarElem.style.border = '';
-    progressbarElem.style.backgroundColor =  '';
+    progressbarElem.style.backgroundColor = '';
     timeDisplay.style.backgroundColor = '';
     timeDisplay.style.border = '';
 
@@ -194,9 +197,11 @@ function lightmode() {
     calendarContainer.style.border = '';
 
     const sessionCount = document.querySelector('.session-counter');
-    if (sessionCount) sessionCount.style.backgroundColor = '';
-    if (sessionCount) sessionCount.style.border = '';
-    if (sessionCount) sessionCount.style.color = '';
+    if (sessionCount) {
+        sessionCount.style.backgroundColor = 'white'; // Explicitly set to white
+        sessionCount.style.border = '';
+        sessionCount.style.color = '';
+    }
     
     const todayh1 = document.querySelector('.session-counter h1');
     if (todayh1) todayh1.style.color = '';
@@ -216,9 +221,11 @@ mycheckb.addEventListener('change', () => {
 });
 
 //* load saved theme when the page reloads
-document.addEventListener('DOMContentLoaded', loadSavedtheme);
-//* call immediately when the script rnus after domcntnload
-loadSavedtheme();
+document.addEventListener('DOMContentLoaded', () => {
+    loadSavedtheme();
+    // Reapply theme after a short delay to ensure calendar is loaded
+    setTimeout(loadSavedtheme, 100);
+});
 
 
 
