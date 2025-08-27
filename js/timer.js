@@ -642,3 +642,12 @@ function onStopTimer(){
 
     appearToast();
 }
+
+// Makes timer functions accessible from HTML onclick attributes
+window.startbutt = startbutt;     // Makes the start/pause timer function available
+window.skipbutt = skipbutt;       // Makes the skip timer function available
+window.stopbutt = stopbutt;       // Makes the stop timer function available
+window.to_pomo = to_pomo;         // Makes the switch to pomodoro mode function available
+window.to_shortb = to_shortb;     // Makes the switch to short break function available
+window.to_longb = to_longb;       // Makes the switch to long break function available
+window.closeModal = closeModal;    // Makes the modal close function available
