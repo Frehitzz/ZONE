@@ -148,8 +148,12 @@ document.addEventListener('DOMContentLoaded', function(){
             }
 
             tdClass = getSessionClass(session);
-
-            calendarHTML += `<td${tdClass ? ` class="${tdClass}"` : ''}${tdId}><div>${day}</div></td>`;
+            //* for tootltip displaying the sessions on each dates
+            let tooltipAttr = '';
+            if (session > 0) {
+                tooltipAttr = ` title="${session} sessions"`;
+            }
+            calendarHTML += `<td${tdClass ? ` class="${tdClass}"` : ''}${tdId}${tooltipAttr}><div>${day}</div></td>`;
         }
 
         //* Empty cells after the last day
@@ -252,10 +256,16 @@ document.addEventListener('DOMContentLoaded', function(){
             
             if (todayCell) {
                 todayCell.className = getSessionClass(session);
-                // Store the session/bgcolor for today (per-date)
                 const bgColor = getSessionBgColor(session);
                 
-                // Always save today's session count to its specific date key
+                // Update tooltip for today's cell
+                if (session > 0) {
+                    todayCell.setAttribute('title', `${session} sessions`);
+                } else {
+                    todayCell.removeAttribute('title');
+                }
+                
+                // Store the session/bgcolor for today (per-date)
                 localStorage.setItem('session-' + todayKey, session);
                 localStorage.setItem('bgcolor-' + todayKey, bgColor);
                 
@@ -305,8 +315,12 @@ document.addEventListener('DOMContentLoaded', function(){
                         const div = td.querySelector('div');
                         if (div && (bgColor || session > 0)) {
                             div.style.background = bgColor || getSessionBgColor(session);
-                            // Also update the class for proper styling
                             td.className = getSessionClass(session);
+                            if (session > 0) {
+                                td.setAttribute('title', `${session} sessions`);
+                            } else {
+                                td.removeAttribute('title');
+                            }
                         }
                     }
                 });
