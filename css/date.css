@@ -118,7 +118,55 @@
     z-index: 1000;
 } */
 
+.bottom-calendar{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: white;
+}
+
+.bgcolor{
+    display: flex;
+    gap: 5px;
+    height: 10px;
+}
+
+.bgcolor span{
+    width: 10px;
+    border-radius: 5px;
+}
+
+.span1{
+    background-color: #23d3ff20;;
+    border: 1px solid #67faff;
+}
+
+.span2{
+    background-color: #23d3ff40;
+    border: 1px solid #67faff;
+}
+
+.span3{
+    background-color: rgb(45, 151, 221);
+    border: 1px solid #67faff;
+}
+
+.span4{
+    background-color: rgba(35, 211, 255, 0.582);
+    border: 1px solid #67faff;
+}
+
+.span5{
+    background-color: #33e0ec;
+    border: 1px solid #67faff;
+}
+
 @media (max-width: 480px) {
+    .calendar-table{
+        width: 300px;
+    }
+
     .calendar-table th{
         border-radius: 10%;
     }
