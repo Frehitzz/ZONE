@@ -292,7 +292,7 @@ function startbutt(){
                 if (activeMode.classList.contains('pomotime')) {
                     MessageModal = "Pomodoro session completed! Time for a break.";
                 } else if (activeMode.classList.contains('shortbreak')) {
-                    MessageModal = "Short break finished! Ready for another Pomodoro?";
+                    MessageModal = "Short break finished, ready for another Pomodoro?";
                 } else if (activeMode.classList.contains('longbreak')) {
                     MessageModal = "Long break completed! Let's start fresh.";
                 }
