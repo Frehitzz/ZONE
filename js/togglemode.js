@@ -30,6 +30,9 @@ const taskAdded = document.querySelectorAll('.added-task');
 //* CALENDAR
 const calendarContainer = document.querySelector('.calendar');
 
+//* navigation
+const mynav = document.querySelector('.mynav');
+
 
 
 
@@ -126,6 +129,8 @@ function darkmode() {
     const todayh1 = document.querySelector('.session-counter h1');
     if (todayh1) todayh1.style.color = 'lightgray';
 
+    mynav.style.border = '2px solid rgba(255, 255, 255, 0.1)';
+
 
 }
 
@@ -205,6 +210,8 @@ function lightmode() {
     
     const todayh1 = document.querySelector('.session-counter h1');
     if (todayh1) todayh1.style.color = '';
+
+    mynav.style.border = '';
 
 
 }
