@@ -150,6 +150,21 @@ body.lightmode{
     border: none;
 }
 
+
+/** DARK MODE LIGHT MODE */
+.toggle-mode{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-right: 20px;
+}
+
+.fa-sun, .fa-moon{
+    font-size: 20px;
+    color: black;
+}
+
+
 @media (max-width: 900px) {
 
     body{
@@ -203,8 +218,15 @@ body.lightmode{
 		padding: 8px 12px;
 	}
 	.title{
-		font-size: 18px;
+		font-size: 25px;
+        margin: 0;
+        padding: 0;
 	}
+
+    .toggle-mode{
+        margin-right: 0;
+    }
+
 	.settings{
 		font-size: 12px;
 	}
@@ -215,7 +237,9 @@ body.lightmode{
 	.pomodoro-timer{
 		padding: 12px;
 		border-radius: 18px;
-        border: none;
+        border: none !important;
+        margin-bottom: 30px;
+         margin-top: 30px;
 	}
 	.controls { width: 80%; }
 	.skip-butt, .start-butt, .stop-butt{
@@ -223,18 +247,10 @@ body.lightmode{
 	}
 	.bottom-timer{ margin-top: 32px; }
 	
-}
-
-
-/** DARK MODE LIGHT MODE */
-.toggle-mode{
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-right: 20px;
-}
-
-.fa-sun, .fa-moon{
-    font-size: 20px;
-    color: black;
+    .colon p{
+        font-size: 100px;
+        padding-top: 0;
+        padding-bottom: 40px;
+        margin: 0;
+    }
 }

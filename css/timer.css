@@ -111,8 +111,16 @@
             color: rgba(255, 255, 255, 0.4);
             font-family: 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
             animation: blink 1s ease-in-out infinite;
-            line-height: 1;
-            margin-top: -10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 120px; /* Add this to match the font size */
+            margin-bottom:0; /* Add this to align with numbers */
+}
+
+        .colonp {
+            margin-top: 0;
+            padding-top: 90px;
         }
 
         @keyframes blink {
@@ -132,6 +140,6 @@
 
 @media (max-width: 480px){
     .time-value{
-        font-size: 100px;
+        font-size: 90px;
     }
 }
