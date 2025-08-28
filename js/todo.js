@@ -229,6 +229,8 @@ function showNotes(){
             mynotes.style.display = 'none';
         }, 300); // Match the CSS transition duration
     }
+
+
 }
 
 function deleteTask(idx){
@@ -287,7 +289,7 @@ function doneTask(idx){
 
             }, 300); // MATCH WITH THE ANIMATION DURATION
 
-        },100); // TO WAIT THE CHECK ANIAMTION TO COMPELTE
+        },500); // TO WAIT THE CHECK ANIAMTION TO COMPELTE
     }
 }   
 
