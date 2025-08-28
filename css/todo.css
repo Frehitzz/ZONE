@@ -316,6 +316,44 @@ textarea{
     animation: disappearTask 0.3s ease-out forwards;
 }
 
+/* Remove the existing .task-checkb style and add these styles */
+
+.task-checkb, .complete-task-checkb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #2196F3;
+  border-radius: 4px;
+  margin-right: 10px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* Style for checked state */
+.task-checkb:checked, .complete-task-checkb:checked {
+  background-color: #2196F3;
+  border-color: #2196F3;
+}
+
+/* Create checkmark */
+.task-checkb:checked::after, .complete-task-checkb:checked::after {
+  content: '✓';
+  position: absolute;
+  color: white;
+  font-size: 14px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Hover effect */
+.task-checkb:hover, .complete-task-checkb:hover {
+  border-color: #1976D2;
+  background-color: rgba(33, 150, 243, 0.1);
+}
+
 @keyframes checkTask {
     0% {
         transform: scale(1);
@@ -470,6 +508,7 @@ textarea{
 .chevron{
   margin-right: 10px;
   color: white;
+  cursor: pointer;
 }
 
 /* FOR COMPLETED TASK */
