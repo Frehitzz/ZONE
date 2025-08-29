@@ -488,12 +488,14 @@ function stopsound(){
 function appearModal(){
     const Mymodal = document.querySelector('.modal');
     const modalText = document.querySelector('.modal-text');
-    
     // Set the message content
     modalText.textContent = MessageModal;
     
     // Show the modal
     Mymodal.style.display = 'flex';
+
+    const isDarkmode = document.body.classList.contains('darkmode');
+    modalText.style.color = isDarkmode ? 'white' : 'white';
 }
 
 function closeModal(){
@@ -556,6 +558,13 @@ function appearToast(){
     const toastContainer = document.querySelector('.toast-container');
     const toastmess = document.querySelector('.toast-text');
     
+    //* CHANGING TOAST STYLE ON DARKMODE
+    const isDarkmode = document.body.classList.contains('darkmode');
+    toastContainer.style.backgroundColor = isDarkmode ? 'rgba(35, 211, 255, 0.582)' : '';
+    toastContainer.style.border = isDarkmode ? '1px solid #67faff' : '';
+
+    //* TOAST MESSAGE ON DARKMODE
+    toastmess.style.color = isDarkmode ? 'white' : '';
     // Clear any existing timeout to prevent conflicts
     if (toastTimeout) {
         clearTimeout(toastTimeout);
