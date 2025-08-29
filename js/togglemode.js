@@ -33,6 +33,23 @@ const calendarContainer = document.querySelector('.calendar');
 //* navigation
 const mynav = document.querySelector('.mynav');
 
+//* modal 
+const mymodal = document.querySelector('.modal-container');
+
+
+//* MODAL BUTTON
+const modalbutt = document.querySelector('.rest-button');
+
+//* TODO MODAL
+const todomodal = document.querySelector('.todo-modal-container');
+const todoInput = document.querySelector('.input-todo');
+const slidercont = document.querySelector('.slider-container');
+//* DELETE MODAL
+const trash = document.getElementById('trash');
+
+//*NOTES
+const notearea = document.querySelector('.notes');
+
 
 
 
@@ -131,6 +148,22 @@ function darkmode() {
 
     mynav.style.border = '2px solid rgba(255, 255, 255, 0.1)';
 
+    mymodal.style.backgroundColor = 'rgba(35, 211, 255, 0.582)';
+    mymodal.style.border = '1px solid #67faff';
+
+    modalbutt.style.backgroundColor = '#67faff'
+    modalbutt.style.border = '1px solid rgba(35, 211, 255, 0.582)';
+    modalbutt.style.color = 'black'
+
+    //* TODO MODAL
+    todomodal.style.backgroundColor = 'black';
+    todomodal.style.border = '1px solid rgb(106, 134, 255)';
+    todoInput.style.backgroundColor = 'transparent';
+    todoInput.style.color = 'white';
+    slidercont.style.backgroundColor = 'rgba(41, 40, 40, 1)';
+    trash.style.color = 'white';
+    notearea.style.backgroundColor= 'rgba(41, 40, 40, 1)';
+    notearea.style.color = 'white';
 
 }
 
@@ -213,6 +246,18 @@ function lightmode() {
 
     mynav.style.border = '';
 
+    mymodal.style.backgroundColor = '';
+    mymodal.style.border = '';
+
+    //* TODO MODAL
+    todomodal.style.backgroundColor = '';
+    todomodal.style.border = '';
+    todoInput.style.backgroundColor = '';
+    todoInput.style.color = '';
+    slidercont.style.backgroundColor = '';
+    trash.style.color = '';
+    notearea.style.backgroundColor= '';
+    notearea.style.color = '';
 
 }
 
